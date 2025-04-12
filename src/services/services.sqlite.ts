@@ -23,9 +23,7 @@ export const itemsService = {
     const newItem = {
       ...data,
       id: crypto.randomUUID(),
-      // SQLite使用integer存储时间戳，需要转换Date为数字
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      // SQLite使用integer存储时间戳，schema中已有默认值
     };
     await db.insert(items).values(newItem).run();
     return itemsService.getById(newItem.id);
@@ -33,7 +31,7 @@ export const itemsService = {
 
   update: async (id: string, data: Partial<Item>): Promise<Item | null> => {
     await db.update(items)
-      .set({ ...data, updatedAt: Date.now() })
+      .set({ ...data })
       .where(eq(items.id, id))
       .run();
     return itemsService.getById(id);
@@ -59,9 +57,7 @@ export const categoriesService = {
     const newCategory = {
       ...data,
       id: crypto.randomUUID(),
-      // SQLite使用integer存储时间戳，需要转换Date为数字
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      // SQLite使用integer存储时间戳，schema中已有默认值
     };
     await db.insert(categories).values(newCategory).run();
     return categoriesService.getById(newCategory.id);
@@ -69,7 +65,7 @@ export const categoriesService = {
 
   update: async (id: string, data: Partial<Category>): Promise<Category | null> => {
     await db.update(categories)
-      .set({ ...data, updatedAt: Date.now() })
+      .set({ ...data })
       .where(eq(categories.id, id))
       .run();
     return categoriesService.getById(id);
@@ -95,9 +91,7 @@ export const testimonialsService = {
     const newTestimonial = {
       ...data,
       id: crypto.randomUUID(),
-      // SQLite使用integer存储时间戳，需要转换Date为数字
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      // SQLite使用integer存储时间戳，schema中已有默认值
     };
     await db.insert(testimonials).values(newTestimonial).run();
     return testimonialsService.getById(newTestimonial.id);
@@ -105,7 +99,7 @@ export const testimonialsService = {
 
   update: async (id: string, data: Partial<Testimonial>): Promise<Testimonial | null> => {
     await db.update(testimonials)
-      .set({ ...data, updatedAt: Date.now() })
+      .set({ ...data })
       .where(eq(testimonials.id, id))
       .run();
     return testimonialsService.getById(id);
@@ -131,9 +125,7 @@ export const featuresService = {
     const newFeature = {
       ...data,
       id: crypto.randomUUID(),
-      // SQLite使用integer存储时间戳，需要转换Date为数字
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      // SQLite使用integer存储时间戳，schema中已有默认值
     };
     await db.insert(features).values(newFeature).run();
     return featuresService.getById(newFeature.id);
@@ -141,7 +133,7 @@ export const featuresService = {
 
   update: async (id: string, data: Partial<Feature>): Promise<Feature | null> => {
     await db.update(features)
-      .set({ ...data, updatedAt: Date.now() })
+      .set({ ...data })
       .where(eq(features.id, id))
       .run();
     return featuresService.getById(id);

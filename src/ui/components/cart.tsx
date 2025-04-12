@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import * as React from "react";
 
+import { useCart } from "~/lib/hooks/use-cart";
 import { cn } from "~/lib/utils";
 import { Badge } from "~/ui/primitives/badge";
 import { Button } from "~/ui/primitives/button";
@@ -58,29 +59,19 @@ const mockCart: CartItem[] = [
 
 export function Cart({ className }: CartProps) {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [cartItems, setCartItems] = React.useState<CartItem[]>(mockCart);
-
-  const totalItems = cartItems.reduce((acc, item) => acc + item.quantity, 0);
-  const subtotal = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
-    0,
-  );
+  const { items: cartItems, updateQuantity, removeItem, clearCart, itemCount: totalItems, subtotal } = useCart();
 
   const handleUpdateQuantity = (id: string, newQuantity: number) => {
     if (newQuantity < 1) return;
-    setCartItems((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item,
-      ),
-    );
+    updateQuantity(id, newQuantity);
   };
 
   const handleRemoveItem = (id: string) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+    removeItem(id);
   };
 
   const handleClearCart = () => {
-    setCartItems([]);
+    clearCart();
   };
 
   return (

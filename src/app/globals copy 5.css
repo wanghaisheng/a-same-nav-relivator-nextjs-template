@@ -1,0 +1,191 @@
+/* === STYLE: Playful Crypto (Inspired by Image) === */
+/* Description: Vibrant purple/yellow blocks, bold typography, cartoon illustrations, highly rounded buttons, flat design. */
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *)); /* Assuming this style IS the intended dark/default */
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    border-color: var(--color-border, currentColor);
+    border-width: 1px; /* Default, override as needed */
+    transition: background-color 0.15s ease-out, color 0.15s ease-out, border-color 0.15s ease-out, transform 0.15s ease-out, opacity 0.15s ease-out;
+    box-shadow: none; /* Default to no shadow */
+  }
+  *:focus-visible {
+    outline: 3px solid var(--color-ring); /* Clear, thick ring */
+    outline-offset: 1px;
+    box-shadow: none;
+  }
+  *:focus:not(:focus-visible) { outline: none; }
+  :focus:not(:focus-visible) { outline: none; } /* Fallback */
+}
+
+/* --- Light Mode: (Define a contrasting fallback - perhaps lighter?) --- */
+/* This style is strongly dark/vibrant; a light mode might invert or use pastels */
+:root {
+  --background: oklch(0.98 0.01 280); /* Light Lavender */
+  --foreground: oklch(0.15 0.05 270); /* Dark Purple */
+  --card: oklch(0.95 0.15 90);      /* Light Yellow */
+  --card-foreground: oklch(0.15 0.05 270); /* Dark Purple */
+  --popover: oklch(1 0 0);             /* White */
+  --popover-foreground: oklch(0.15 0.05 270);
+  --primary: oklch(0.15 0.05 270);     /* Dark Purple button */
+  --primary-foreground: oklch(1 0 0);   /* White text */
+  --secondary: transparent;             /* Outline button */
+  --secondary-foreground: oklch(0.15 0.05 270); /* Dark text/border */
+  --muted: oklch(0.9 0.02 280);       /* Lighter Lavender */
+  --muted-foreground: oklch(0.4 0.04 270); /* Medium Purple */
+  --accent: oklch(0.9 0.2 90);        /* Bright Yellow (still) */
+  --accent-foreground: oklch(0.15 0.05 270); /* Dark text on Yellow */
+  --destructive: oklch(0.7 0.25 25);    /* Coral Red */
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.15 0.05 270);     /* Dark border */
+  --input: oklch(1 0 0);                /* White input */
+  --ring: oklch(0.5 0.2 270);         /* Visible Purple ring */
+  --chart-1: oklch(0.8 0.18 0);   /* Pink */
+  --chart-2: oklch(0.85 0.15 180); /* Cyan */
+  --chart-3: var(--accent);       /* Yellow */
+  --chart-4: oklch(0.7 0.2 270);  /* Mid Purple */
+  --chart-5: oklch(0.8 0.1 40);   /* Orange */
+  --radius: 9999px; /* Pill shape default */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --sidebar: oklch(0.95 0.015 280);
+  --sidebar-foreground: oklch(0.15 0.05 270);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: oklch(0.8 0.03 280);
+  --sidebar-ring: var(--ring);
+}
+
+/* --- Dark Mode: (Derived from Image) --- */
+.dark {
+  --background: oklch(0.35 0.18 280); /* Vibrant Purple */
+  --foreground: oklch(1 0 0);          /* White */
+  --card: oklch(0.9 0.25 90);       /* Vibrant Yellow */
+  --card-foreground: oklch(0.1 0.02 280); /* Dark Purple/Black text on Yellow */
+  --popover: oklch(0.25 0.1 280);     /* Darker Purple popover */
+  --popover-foreground: oklch(1 0 0);   /* White */
+  --primary: oklch(1 0 0);              /* White button */
+  --primary-foreground: oklch(0.1 0.02 280); /* Dark text on White button */
+  --secondary: transparent;             /* Outline button bg */
+  --secondary-foreground: oklch(1 0 0);   /* White text/border on Purple */
+  --muted: oklch(0.45 0.15 280);      /* Less saturated Purple */
+  --muted-foreground: oklch(0.85 0.05 280);/* Lighter Purple/White */
+  --accent: oklch(0.9 0.25 90);       /* Vibrant Yellow button */
+  --accent-foreground: oklch(0.1 0.02 280); /* Dark text on Yellow button */
+  --destructive: oklch(0.7 0.28 20);    /* Bright Red/Orange */
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(1 0 0);              /* White border (on purple) / Dark (on yellow - handled via context) */
+  --input: oklch(0.25 0.1 280);     /* Darker Purple input */
+  --ring: var(--accent);                /* Yellow focus ring */
+  --chart-1: oklch(0.8 0.2 0);   /* Pink */
+  --chart-2: oklch(0.8 0.2 180); /* Teal/Cyan */
+  --chart-3: oklch(0.6 0.25 280); /* Mid Purple */
+  --chart-4: oklch(0.85 0.15 40); /* Orange */
+  --chart-5: oklch(1 0 0);        /* White (for contrast) */
+  --radius: 9999px; /* Pill shape default */
+  /* No Shadows */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --sidebar: oklch(0.25 0.15 280); /* Darker Purple */
+  --sidebar-foreground: oklch(1 0 0);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: oklch(0.5 0.1 280);
+  --sidebar-ring: var(--ring);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius: var(--radius); /* Map pill radius */
+  --radius-sm: calc(var(--radius) * 0.1); /* Much less rounded */
+  --radius-md: calc(var(--radius) * 0.2); /* Less rounded */
+  --radius-lg: calc(var(--radius) * 0.5); /* Rounded rect */
+  --radius-xl: var(--radius); /* Full pill */
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  /* ... map sidebar vars */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * { @apply border-border shadow-none; /* font-family: 'Your Bold Playful Font', sans-serif; */ border-width: 0px; } /* Default no border */
+  body { @apply bg-background text-foreground; }
+}
+
+@layer components {
+  /* Primary Button: White bg, Dark text, Pill shape */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground px-6 py-2.5 rounded-full font-bold uppercase tracking-wide
+           hover:scale-105 active:scale-95 transition-transform
+           focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring
+           disabled:opacity-60;
+  }
+  /* Accent Button: Yellow bg, Dark text, Pill shape */
+  .btn-accent {
+    @apply bg-accent text-accent-foreground px-5 py-2 rounded-full font-semibold
+           hover:brightness-95 active:brightness-90
+           focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring
+           disabled:opacity-60;
+  }
+  /* Secondary/Outline Button: White outline/text on (purple) bg */
+  .btn-outline {
+    @apply bg-secondary border-2 border-secondary-foreground text-secondary-foreground px-6 py-2.5 rounded-full font-bold uppercase tracking-wide
+           hover:bg-white/10 /* Subtle hover */
+           focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring
+           disabled:opacity-50;
+  }
+  /* Card sections (Yellow blocks) */
+  .card-section {
+    @apply bg-card text-card-foreground rounded-2xl p-8 md:p-12; /* Use less rounding than buttons */
+     /* border-color: var(--color-card-foreground); Optional subtle border */
+  }
+  .input {
+    /* Needs context for border color (dark on yellow, light on purple) */
+    @apply bg-input rounded-lg px-4 py-3 border-2 focus:ring-2 focus:ring-ring focus:border-transparent;
+  }
+}

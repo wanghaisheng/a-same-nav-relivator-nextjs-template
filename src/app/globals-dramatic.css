@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate"; /* Ensure this plugin is installed and configured */
+
+/* --- DRAMATIC & FOCUSED UX THEME --- */
+/* Description: High-contrast, sharp, emphasizes clarity and interaction. */
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* Base mapping */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-border, currentColor);
+    /* Smooth transitions for theme changes and interactions */
+    transition: background-color 0.2s ease-out, color 0.2s ease-out, border-color 0.2s ease-out, box-shadow 0.2s ease-out, opacity 0.2s ease-out;
+  }
+
+  /* Enhanced Focus State for Accessibility & Clarity */
+  *:focus-visible {
+      outline: 2px solid var(--color-ring);
+      outline-offset: 2px;
+      /* Optional: subtle box-shadow for extra pop on focus */
+      /* box-shadow: 0 0 0 4px oklch(from var(--color-ring) l c h / 0.3); */
+  }
+   /* Remove default outline only when focus-visible is supported/used */
+  *:focus:not(:focus-visible) {
+    outline: none;
+  }
+  :focus:not(:focus-visible) { /* Fallback for older setups if needed */
+     outline: none;
+  }
+
+}
+
+/* --- Light Mode: Stark Contrast, Sharp & Clean --- */
+:root {
+  --background: oklch(0.99 0.005 240); /* Very light, near white cool gray */
+  --foreground: oklch(0.10 0.015 260); /* Very dark cool gray */
+  --card: oklch(1 0 0);                 /* Pure white cards */
+  --card-foreground: oklch(0.10 0.015 260); /* Match foreground */
+  --popover: oklch(1 0 0);              /* Pure white popovers */
+  --popover-foreground: oklch(0.10 0.015 260); /* Match foreground */
+  --primary: oklch(0.55 0.26 295);      /* Intense, slightly deeper Magenta/Purple */
+  --primary-foreground: oklch(0.99 0.005 240); /* High contrast light foreground */
+  --secondary: oklch(0.75 0.19 190);    /* Bright, clean Cyan */
+  --secondary-foreground: oklch(0.10 0.02 210); /* Dark blue/indigo for contrast */
+  --muted: oklch(0.95 0.008 240);     /* Lighter cool gray */
+  --muted-foreground: oklch(0.40 0.015 250); /* Medium-dark cool gray */
+  --accent: oklch(0.85 0.22 120);     /* Vivid Lime Green */
+  --accent-foreground: oklch(0.12 0.02 120); /* Dark Green for contrast */
+  --destructive: oklch(0.60 0.30 25);     /* Strong, clear Red-Orange */
+  --destructive-foreground: oklch(1 0 0);  /* Pure white */
+  --border: oklch(0.90 0.01 250);    /* Slightly more visible cool border */
+  --input: oklch(0.97 0.006 240);   /* Slightly off-white input bg, distinct from card */
+  --ring: oklch(0.55 0.26 295);       /* Primary color for focus ring (fully opaque) */
+
+  /* Chart Colors - Bold & Distinct */
+  --chart-1: oklch(0.55 0.26 295);    /* Magenta (Primary) */
+  --chart-2: oklch(0.75 0.19 190);    /* Cyan (Secondary) */
+  --chart-3: oklch(0.85 0.22 120);    /* Lime (Accent) */
+  --chart-4: oklch(0.70 0.25 50);     /* Bold Yellow/Orange */
+  --chart-5: oklch(0.45 0.22 240);    /* Deep, saturated Blue */
+
+  /* Radius - Sharp Edges */
+  --radius: 0.25rem; /* 4px - Sharp and modern */
+
+  /* Subtle Shadows for Depth */
+  --shadow-sm: 0 1px 2px 0 oklch(0.1 0.01 260 / 0.05);
+  --shadow-md: 0 4px 6px -1px oklch(0.1 0.01 260 / 0.08), 0 2px 4px -2px oklch(0.1 0.01 260 / 0.08);
+  --shadow-lg: 0 10px 15px -3px oklch(0.1 0.01 260 / 0.08), 0 4px 6px -4px oklch(0.1 0.01 260 / 0.08);
+
+  /* Sidebar - Distinct Background */
+  --sidebar: oklch(0.97 0.006 240);   /* Same as input for consistency */
+  --sidebar-foreground: oklch(0.10 0.015 260);
+  --sidebar-primary: oklch(0.55 0.26 295);
+  --sidebar-primary-foreground: oklch(0.99 0.005 240);
+  --sidebar-accent: oklch(0.85 0.22 120);
+  --sidebar-accent-foreground: oklch(0.12 0.02 120);
+  --sidebar-border: oklch(0.88 0.01 250); /* Slightly lighter border inside sidebar */
+  --sidebar-ring: oklch(0.55 0.26 295);
+}
+
+/* --- Dark Mode: Deep Space & Neon Glow --- */
+.dark {
+  --background: oklch(0.08 0.01 260); /* Very deep, near black cool base */
+  --foreground: oklch(0.96 0.008 240); /* Very light cool gray */
+  --card: oklch(0.12 0.015 260);  /* Slightly lighter dark for cards */
+  --card-foreground: oklch(0.96 0.008 240); /* Match foreground */
+  --popover: oklch(0.15 0.02 265);  /* Even lighter dark for popovers */
+  --popover-foreground: oklch(0.98 0.005 240); /* Almost white */
+  --primary: oklch(0.65 0.30 295);      /* Brighter, more vibrant Magenta/Purple */
+  --primary-foreground: oklch(0.05 0.01 295); /* Very dark purple for strong contrast */
+  --secondary: oklch(0.78 0.22 190);    /* Brighter Cyan */
+  --secondary-foreground: oklch(0.98 0.005 240); /* Almost white */
+  --muted: oklch(0.18 0.018 260);    /* Darker cool gray */
+  --muted-foreground: oklch(0.55 0.012 250); /* Medium-light cool gray */
+  --accent: oklch(0.88 0.25 120);     /* Very bright Lime Green */
+  --accent-foreground: oklch(0.98 0.005 240); /* Almost white */
+  --destructive: oklch(0.68 0.32 25);     /* Bright, clear Red-Orange */
+  --destructive-foreground: oklch(0.08 0.02 25); /* Very dark red for strong contrast */
+  --border: oklch(0.22 0.018 260);   /* Visible darker border */
+  --input: oklch(0.19 0.018 260);    /* Dark input, distinct from card */
+  --ring: oklch(0.70 0.25 190);       /* Use bright Cyan for focus ring in dark mode for better visibility */
+
+  /* Chart Colors - Neon Pop */
+  --chart-1: oklch(0.65 0.30 295);    /* Magenta (Primary) */
+  --chart-2: oklch(0.78 0.22 190);    /* Cyan (Secondary) */
+  --chart-3: oklch(0.88 0.25 120);    /* Lime (Accent) */
+  --chart-4: oklch(0.75 0.28 50);     /* Bright Yellow/Orange */
+  --chart-5: oklch(0.55 0.28 240);    /* Bright Blue */
+
+  /* Radius - Sharp Edges */
+  /* (Inherited from :root) */
+
+  /* Subtle Shadows (Optional in Dark Mode - can use highlights instead) */
+  /* Using lighter borders or slightly lighter backgrounds might be more effective than dark shadows */
+  --shadow-sm: 0 1px 2px 0 oklch(0 0 0 / 0.1); /* Less prominent shadow */
+  --shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.12), 0 2px 4px -2px oklch(0 0 0 / 0.10);
+  --shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.12), 0 4px 6px -4px oklch(0 0 0 / 0.10);
+
+  /* Sidebar - Deeper Dark */
+  --sidebar: oklch(0.06 0.008 260); /* Even darker sidebar */
+  --sidebar-foreground: oklch(0.96 0.008 240);
+  --sidebar-primary: oklch(0.65 0.30 295);
+  --sidebar-primary-foreground: oklch(0.05 0.01 295);
+  --sidebar-accent: oklch(0.88 0.25 120);
+  --sidebar-accent-foreground: oklch(0.98 0.005 240);
+  --sidebar-border: oklch(0.20 0.015 260);
+  --sidebar-ring: oklch(0.70 0.25 190); /* Match main ring */
+}
+
+@theme inline {
+  /* Map the CSS variables to Tailwind theme keys */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring); /* Mapped for outline/ring utilities */
+
+  /* Chart colors */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Radius variants based on the new sharp base radius */
+  --radius-sm: calc(var(--radius) - 2px); /* 2px (or consider 0) */
+  --radius-md: var(--radius);             /* 4px */
+  --radius-lg: calc(var(--radius) + 4px); /* 8px */
+  --radius-xl: calc(var(--radius) + 8px); /* 12px */
+
+  /* Shadows */
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  /* Sidebar colors */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  /* Base styles using the theme */
+  * {
+    @apply border-border;
+    /* outline-color: var(--color-ring); */ /* Handled by focus-visible rule */
+  }
+  body {
+    @apply bg-background text-foreground;
+    /* Consider a clean, sharp sans-serif font */
+    /* font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif; */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Optional: Add Base Component Styles for Dramatic Effect */
+@layer components {
+  /* Example: Primary Button Styling */
+  .btn-primary {
+      @apply bg-primary text-primary-foreground font-semibold shadow-sm hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring active:opacity-80 disabled:opacity-50 transition-opacity;
+      /* Add padding, rounding etc. as needed */
+      /* Example: px-4 py-2 rounded-md */
+  }
+
+  /* Example: Card Styling */
+  .card {
+      @apply bg-card text-card-foreground border border-border rounded-lg shadow-md;
+      /* Add padding etc. */
+      /* Example: p-6 */
+  }
+
+  /* Example: Input Styling */
+  .input {
+      @apply bg-input border border-border rounded-md focus:border-primary focus:ring-1 focus:ring-primary disabled:opacity-60;
+       /* Add padding etc. */
+      /* Example: px-3 py-2 */
+  }
+
+  /* Add more component base styles as needed */
+}

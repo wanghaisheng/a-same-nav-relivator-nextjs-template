@@ -1,0 +1,202 @@
+/* === STYLE: GLASSMORPHISM === */
+/* Note: Requires `backdrop-filter: blur()` utility (e.g., `backdrop-blur-md`) applied to elements, and alpha transparency in colors. */
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: var(--background); /* Background is often image/gradient */
+  --color-foreground: var(--foreground);
+}
+
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    border-color: var(--color-border, currentColor);
+    transition: background-color 0.3s ease-out, color 0.3s ease-out, border-color 0.3s ease-out, box-shadow 0.3s ease-out, opacity 0.3s ease-out, backdrop-filter 0.3s ease-out;
+  }
+  *:focus-visible {
+    outline: none; /* Outline can look bad on glass */
+    /* Use a ring or border effect */
+    box-shadow: inset 0 0 0 2px var(--color-ring);
+  }
+  *:focus:not(:focus-visible) { outline: none; box-shadow: none; }
+  :focus:not(:focus-visible) { outline: none; box-shadow: none; }
+}
+
+/* --- Light Mode: Translucent Layers, Bright BG --- */
+:root {
+  /* Background would ideally be a gradient or image set elsewhere */
+  --background: oklch(0.9 0.1 200);  /* Example: Light gradient base */
+  --foreground: oklch(0.1 0.02 240); /* Dark Text */
+  /* Glass elements */
+  --card-bg-oklch: 1 0 0; /* Base color before alpha - White */
+  --card-alpha: 0.6; /* Alpha for card background */
+  --card: oklch(var(--card-bg-oklch) / var(--card-alpha));
+  --card-foreground: oklch(0.15 0.015 240); /* Darker text on glass */
+  --popover-bg-oklch: 1 0 0;
+  --popover-alpha: 0.8;
+  --popover: oklch(var(--popover-bg-oklch) / var(--popover-alpha));
+  --popover-foreground: oklch(0.1 0.01 240);
+  /* Primary is often solid or slightly less transparent */
+  --primary: oklch(0.6 0.2 260 / 0.9); /* Vibrant Purple, mostly opaque */
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.7 0.15 160 / 0.8);/* Bright Teal */
+  --secondary-foreground: oklch(0.1 0.02 160);
+  --muted-bg-oklch: 0.8 0.01 220; /* Grayish base */
+  --muted-alpha: 0.4;
+  --muted: oklch(var(--muted-bg-oklch) / var(--muted-alpha));
+  --muted-foreground: oklch(0.3 0.01 230);
+  --accent-bg-oklch: 0.8 0.2 60; /* Orange base */
+  --accent-alpha: 0.7;
+  --accent: oklch(var(--accent-bg-oklch) / var(--accent-alpha));
+  --accent-foreground: oklch(0.15 0.03 60);
+  --destructive: oklch(0.6 0.25 25 / 0.85); /* Red, mostly opaque */
+  --destructive-foreground: oklch(1 0 0);
+  /* Border is often a subtle light edge */
+  --border: oklch(1 0 0 / 0.2); /* White border with low alpha */
+  --input-bg-oklch: 1 0 0;
+  --input-alpha: 0.5;
+  --input: oklch(var(--input-bg-oklch) / var(--input-alpha));
+  --ring: oklch(1 0 0 / 0.8); /* Bright white ring */
+  --chart-1: oklch(0.7 0.2 300 / 0.8);
+  --chart-2: oklch(0.75 0.18 180 / 0.8);
+  --chart-3: oklch(0.8 0.22 100 / 0.8);
+  --chart-4: oklch(0.65 0.15 40 / 0.8);
+  --chart-5: oklch(0.7 0.1 240 / 0.8);
+  --radius: 1rem; /* 16px - Generous rounding common */
+  /* Subtle shadow for depth */
+  --shadow-sm: 0 2px 10px oklch(0.1 0.01 240 / 0.05);
+  --shadow-md: 0 5px 20px oklch(0.1 0.01 240 / 0.08);
+  --shadow-lg: 0 10px 30px oklch(0.1 0.01 240 / 0.1);
+
+  /* Sidebar uses glass effect */
+  --sidebar-bg-oklch: 1 0 0;
+  --sidebar-alpha: 0.5;
+  --sidebar: oklch(var(--sidebar-bg-oklch) / var(--sidebar-alpha));
+  --sidebar-foreground: oklch(0.1 0.02 240);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+/* --- Dark Mode: Translucent on Dark BG --- */
+.dark {
+  --background: oklch(0.15 0.05 260); /* Example: Dark gradient base */
+  --foreground: oklch(0.95 0.01 220); /* Light Text */
+  --card-bg-oklch: 0.2 0.01 240; /* Dark gray base */
+  --card-alpha: 0.4;
+  --card: oklch(var(--card-bg-oklch) / var(--card-alpha));
+  --card-foreground: oklch(0.98 0.005 220); /* Brighter text */
+  --popover-bg-oklch: 0.25 0.015 240;
+  --popover-alpha: 0.6;
+  --popover: oklch(var(--popover-bg-oklch) / var(--popover-alpha));
+  --popover-foreground: oklch(1 0 0); /* White */
+  --primary: oklch(0.7 0.2 260 / 0.85); /* Bright Purple */
+  --primary-foreground: oklch(0.05 0.01 260);
+  --secondary: oklch(0.75 0.18 160 / 0.8);/* Bright Teal */
+  --secondary-foreground: oklch(0.98 0.005 220);
+  --muted-bg-oklch: 0.3 0.01 240;
+  --muted-alpha: 0.3;
+  --muted: oklch(var(--muted-bg-oklch) / var(--muted-alpha));
+  --muted-foreground: oklch(0.7 0.008 220);
+  --accent-bg-oklch: 0.8 0.2 60;
+  --accent-alpha: 0.6;
+  --accent: oklch(var(--accent-bg-oklch) / var(--accent-alpha));
+  --accent-foreground: oklch(0.98 0.005 220);
+  --destructive: oklch(0.7 0.25 25 / 0.8); /* Bright Red */
+  --destructive-foreground: oklch(0.05 0.02 25);
+  --border: oklch(1 0 0 / 0.15); /* Lighter border */
+  --input-bg-oklch: 0.2 0.01 240;
+  --input-alpha: 0.3;
+  --input: oklch(var(--input-bg-oklch) / var(--input-alpha));
+  --ring: oklch(1 0 0 / 0.7); /* White ring */
+  --chart-1: oklch(0.75 0.22 300 / 0.8);
+  --chart-2: oklch(0.8 0.2 180 / 0.8);
+  --chart-3: oklch(0.85 0.25 100 / 0.8);
+  --chart-4: oklch(0.7 0.18 40 / 0.8);
+  --chart-5: oklch(0.75 0.12 240 / 0.8);
+  /* Inherit radius */
+  --shadow-sm: 0 2px 15px oklch(0 0 0 / 0.1);
+  --shadow-md: 0 6px 25px oklch(0 0 0 / 0.15);
+  --shadow-lg: 0 12px 35px oklch(0 0 0 / 0.2);
+
+  /* Sidebar uses glass effect */
+  --sidebar-bg-oklch: 0.15 0.01 250;
+  --sidebar-alpha: 0.4;
+  --sidebar: oklch(var(--sidebar-bg-oklch) / var(--sidebar-alpha));
+  --sidebar-foreground: oklch(0.95 0.01 220);
+  /* ... rest of sidebar vars */
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--ring);
+}
+
+@theme inline {
+  /* Map base colors and alpha holders */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  /* Map alpha values if needed directly */
+  --card-alpha: var(--card-alpha);
+  --popover-alpha: var(--popover-alpha);
+  --muted-alpha: var(--muted-alpha);
+  --accent-alpha: var(--accent-alpha);
+  --input-alpha: var(--input-alpha);
+  --sidebar-alpha: var(--sidebar-alpha);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  /* ... map sidebar vars */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * { @apply border-border; /* font-family: 'Inter', sans-serif; (Clean sans-serif works well) */ }
+  body { @apply bg-background text-foreground; /* IMPORTANT: Set actual background image/gradient here or on a wrapper div */ }
+}
+
+@layer components {
+  /* Components NEED backdrop-filter and background color with alpha */
+  .btn-primary { @apply bg-primary text-primary-foreground px-5 py-2.5 rounded-lg shadow-md border border-white/10 hover:brightness-110 active:brightness-90 focus-visible:shadow-[inset_0_0_0_2px_var(--color-ring)] disabled:opacity-50 disabled:filter saturate(0); }
+  .card { @apply bg-card text-card-foreground border border-border rounded-xl p-6 shadow-lg backdrop-blur-lg; } /* Apply blur */
+  .input { @apply bg-input border border-border rounded-lg px-4 py-2.5 backdrop-blur-sm focus:border-white/30 focus:shadow-[inset_0_0_0_1px_var(--color-ring)]; } /* Apply blur */
+}

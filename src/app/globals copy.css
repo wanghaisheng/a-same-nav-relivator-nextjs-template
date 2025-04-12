@@ -1,0 +1,170 @@
+/* === STYLE: ILLUSTRATION === */
+/* Focuses on a soft, friendly, slightly hand-drawn feel. */
+@import "tailwindcss";
+@plugin "tailwindcss-animate";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    border-color: var(--color-border, currentColor);
+    transition: background-color 0.25s ease-in-out, color 0.25s ease-in-out, border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, transform 0.2s ease-out, opacity 0.25s ease-in-out; /* Allow transform transitions */
+  }
+  *:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+    /* Optional: Slight scale or glow on focus */
+    /* transform: scale(1.01); */
+  }
+  *:focus:not(:focus-visible) { outline: none; }
+  :focus:not(:focus-visible) { outline: none; }
+}
+
+/* --- Light Mode: Soft Pastels, Friendly --- */
+:root {
+  --background: oklch(0.97 0.02 120); /* Very Light Pastel Green/Blue */
+  --foreground: oklch(0.3 0.04 260);  /* Soft Dark Purple/Brown */
+  --card: oklch(1 0 0);               /* White */
+  --card-foreground: oklch(0.3 0.04 260);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.3 0.04 260);
+  --primary: oklch(0.75 0.15 300);    /* Playful Pink/Magenta */
+  --primary-foreground: oklch(1 0 0);   /* White */
+  --secondary: oklch(0.8 0.12 200);   /* Sky Blue */
+  --secondary-foreground: oklch(0.15 0.03 200);/* Darker Sky Blue */
+  --muted: oklch(0.95 0.015 120);    /* Lighter Pastel */
+  --muted-foreground: oklch(0.5 0.03 280); /* Muted Purple */
+  --accent: oklch(0.9 0.18 90);       /* Sunny Yellow */
+  --accent-foreground: oklch(0.4 0.08 90);  /* Darker Yellow */
+  --destructive: oklch(0.8 0.2 25);     /* Soft Coral/Red */
+  --destructive-foreground: oklch(0.1 0.04 25); /* Dark Coral */
+  --border: oklch(0.8 0.05 280 / 0.6); /* Soft, slightly irregular border color hint */
+  --input: oklch(0.98 0.01 120);     /* Very light input area */
+  --ring: oklch(from var(--primary) l c h / 0.7); /* Primary focus ring */
+
+  /* Soft, diffused shadows */
+  --shadow-sm: 0 2px 4px oklch(0.3 0.04 260 / 0.05);
+  --shadow-md: 0 4px 10px oklch(0.3 0.04 260 / 0.08);
+  --shadow-lg: 0 8px 20px oklch(0.3 0.04 260 / 0.1);
+
+  --chart-1: var(--primary);
+  --chart-2: var(--secondary);
+  --chart-3: var(--accent);
+  --chart-4: oklch(0.85 0.15 40); /* Peach */
+  --chart-5: oklch(0.7 0.1 250);  /* Lavender */
+  --radius: 0.875rem; /* 14px - Friendly rounded corners */
+
+  --sidebar: oklch(0.94 0.03 150); /* Light Teal Panel */
+  --sidebar-foreground: oklch(0.2 0.03 150);
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: oklch(0.75 0.04 150 / 0.7);
+  --sidebar-ring: var(--ring);
+}
+
+/* --- Dark Mode: Enchanted Forest Feel --- */
+.dark {
+  --background: oklch(0.25 0.04 260); /* Deep Indigo */
+  --foreground: oklch(0.9 0.02 100);  /* Soft Yellow/Cream Text */
+  --card: oklch(0.3 0.045 260);      /* Slightly lighter Indigo */
+  --card-foreground: oklch(0.9 0.02 100);
+  --popover: oklch(0.35 0.05 260);
+  --popover-foreground: oklch(0.95 0.01 100);
+  --primary: oklch(0.8 0.18 300);     /* Brighter Pink/Magenta */
+  --primary-foreground: oklch(0.1 0.03 300);
+  --secondary: oklch(0.75 0.15 200);  /* Brighter Sky Blue */
+  --secondary-foreground: oklch(0.9 0.02 100);
+  --muted: oklch(0.35 0.04 260);      /* Darker Indigo */
+  --muted-foreground: oklch(0.6 0.02 220); /* Muted Light Blue */
+  --accent: oklch(0.9 0.2 90);        /* Bright Sunny Yellow */
+  --accent-foreground: oklch(0.3 0.06 90);
+  --destructive: oklch(0.8 0.22 25);    /* Brighter Coral */
+  --destructive-foreground: oklch(0.15 0.05 25);
+  --border: oklch(0.6 0.05 220 / 0.5); /* Soft light blue border */
+  --input: oklch(0.28 0.04 260);      /* Dark input */
+  --ring: oklch(from var(--accent) l c h / 0.8); /* Yellow focus ring */
+
+  /* Softer shadows for dark mode */
+  --shadow-sm: 0 2px 5px oklch(0 0 0 / 0.15);
+  --shadow-md: 0 5px 15px oklch(0 0 0 / 0.2);
+  --shadow-lg: 0 10px 25px oklch(0 0 0 / 0.25);
+
+  --chart-1: var(--primary);
+  --chart-2: var(--secondary);
+  --chart-3: var(--accent);
+  --chart-4: oklch(0.85 0.18 40);
+  --chart-5: oklch(0.75 0.12 250);
+  /* Inherit radius */
+
+  --sidebar: oklch(0.2 0.03 240); /* Dark Blue Panel */
+  --sidebar-foreground: oklch(0.9 0.02 100);
+  /* ... rest of sidebar vars */
+  --sidebar-primary: var(--primary);
+  --sidebar-primary-foreground: var(--primary-foreground);
+  --sidebar-accent: var(--accent);
+  --sidebar-accent-foreground: var(--accent-foreground);
+  --sidebar-border: oklch(0.5 0.04 240 / 0.6);
+  --sidebar-ring: var(--ring);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 6px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 6px);
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+  /* ... map sidebar vars */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * { @apply border-border; /* font-family: 'Comic Sans MS', 'Quicksand', cursive, sans-serif; (Example - Playful Font) */ }
+  body { @apply bg-background text-foreground; /* Could have a subtle pattern or texture */ }
+}
+
+@layer components {
+  /* Buttons might have slight wobble/scale on hover/active */
+  .btn-primary { @apply bg-primary text-primary-foreground px-6 py-3 rounded-full font-semibold shadow-md border border-black/5 hover:scale-105 hover:brightness-105 active:scale-95 active:brightness-95 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:opacity-60 disabled:filter saturate-0; }
+  .card { @apply bg-card text-card-foreground border border-border rounded-2xl p-8 shadow-lg; } /* Generous rounding and shadow */
+  .input { @apply bg-input border border-border rounded-xl px-4 py-3 focus:border-primary focus:ring-1 focus:ring-primary placeholder:text-muted-foreground/70; } /* Rounded input */
+}

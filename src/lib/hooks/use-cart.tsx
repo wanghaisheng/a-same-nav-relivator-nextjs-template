@@ -108,11 +108,11 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     ],
   );
 
-  return <CartContext value={value}>{children}</CartContext>;
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }
 
 export function useCart() {
-  const context = React.use(CartContext);
+  const context = React.useContext(CartContext);
 
   if (context === undefined) {
     throw new Error("useCart must be used within a CartProvider");

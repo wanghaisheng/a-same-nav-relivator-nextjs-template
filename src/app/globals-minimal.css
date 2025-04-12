@@ -1,0 +1,155 @@
+/* === Minimalism === */
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+/* Design: Monochrome, High Contrast, Clean Typography, Generous Spacing, White Space, Subtle Transitions */
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@layer base {
+  *, ::after, ::before, ::backdrop, ::file-selector-button {
+    border-color: var(--color-border, currentColor);
+    /* Subtle transitions for understated feedback */
+    transition: background-color 0.2s ease-out, color 0.2s ease-out, border-color 0.2s ease-out, opacity 0.2s ease-out;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+  *:focus:not(:focus-visible) { outline: none; }
+  :focus:not(:focus-visible) { outline: none; }
+}
+
+/* Light Mode: Stark Black & White */
+:root {
+  --background: oklch(1 0 0);             /* White */
+  --foreground: oklch(0.15 0 0);          /* Near Black */
+  --card: oklch(1 0 0);                   /* White */
+  --card-foreground: oklch(0.15 0 0);      /* Near Black */
+  --popover: oklch(1 0 0);                /* White */
+  --popover-foreground: oklch(0.15 0 0);   /* Near Black */
+  --primary: oklch(0.15 0 0);             /* Near Black (often use foreground directly) */
+  --primary-foreground: oklch(1 0 0);     /* White */
+  --secondary: oklch(0.6 0 0);            /* Medium Gray (subtle secondary elements) */
+  --secondary-foreground: oklch(0.15 0 0); /* Near Black */
+  --muted: oklch(0.95 0 0);               /* Very Light Gray */
+  --muted-foreground: oklch(0.45 0 0);    /* Medium-Dark Gray */
+  --accent: oklch(0.9 0 0);               /* Light Gray (very subtle accent) */
+  --accent-foreground: oklch(0.15 0 0);   /* Near Black */
+  --destructive: oklch(0.15 0 0);         /* Near Black (often indicated by icon/text, not color) */
+  --destructive-foreground: oklch(1 0 0); /* White */
+  --border: oklch(0.92 0 0);              /* Very Light Gray Border */
+  --input: oklch(0.98 0 0);               /* Slightly Off-White Input */
+  --ring: oklch(0.5 0 0);                 /* Gray focus ring */
+
+  /* Charts (Monochrome) */
+  --chart-1: oklch(0.3 0 0);
+  --chart-2: oklch(0.5 0 0);
+  --chart-3: oklch(0.7 0 0);
+  --chart-4: oklch(0.85 0 0);
+  --chart-5: oklch(0.6 0 0);
+
+  /* Sharp or no radius */
+  --radius: 0rem; /* 0px */
+
+  /* No shadows */
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+}
+
+/* Dark Mode: Inverse Black & White */
+.dark {
+  --background: oklch(0.05 0 0);          /* Near Black */
+  --foreground: oklch(0.95 0 0);          /* Near White */
+  --card: oklch(0.05 0 0);                /* Near Black */
+  --card-foreground: oklch(0.95 0 0);     /* Near White */
+  --popover: oklch(0.05 0 0);             /* Near Black */
+  --popover-foreground: oklch(0.95 0 0);  /* Near White */
+  --primary: oklch(0.95 0 0);             /* Near White */
+  --primary-foreground: oklch(0.05 0 0);  /* Near Black */
+  --secondary: oklch(0.4 0 0);            /* Dark Gray */
+  --secondary-foreground: oklch(0.95 0 0);/* Near White */
+  --muted: oklch(0.15 0 0);               /* Very Dark Gray */
+  --muted-foreground: oklch(0.6 0 0);     /* Medium Gray */
+  --accent: oklch(0.2 0 0);               /* Dark Gray accent */
+  --accent-foreground: oklch(0.95 0 0);   /* Near White */
+  --destructive: oklch(0.95 0 0);         /* Near White */
+  --destructive-foreground: oklch(0.05 0 0);/* Near Black */
+  --border: oklch(0.2 0 0);               /* Dark Gray Border */
+  --input: oklch(0.1 0 0);                /* Very Dark Gray Input */
+  --ring: oklch(0.6 0 0);                 /* Gray focus ring */
+
+  /* Charts (Monochrome) */
+  --chart-1: oklch(0.7 0 0);
+  --chart-2: oklch(0.5 0 0);
+  --chart-3: oklch(0.3 0 0);
+  --chart-4: oklch(0.15 0 0);
+  --chart-5: oklch(0.4 0 0);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Sharp radii */
+  --radius-sm: 0rem;
+  --radius-md: 0rem;
+  --radius-lg: 0rem;
+  --radius-xl: 0rem;
+
+  /* No shadows */
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+}
+
+@layer base {
+  * { @apply border-border; }
+  body {
+    @apply bg-background text-foreground;
+    /* Consider: Clean Sans-Serif like Inter, Helvetica Neue, Arial */
+    /* font-family: sans-serif; */
+    /* Generous line height for readability */
+    @apply leading-normal sm:leading-relaxed;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+@layer components {
+  /* Optional: Base styles emphasizing minimalism */
+  .btn { @apply px-4 py-2 transition-opacity duration-200 ease-out hover:opacity-75 disabled:opacity-50; }
+  .btn-primary { @apply bg-primary text-primary-foreground; }
+  .card { @apply bg-card text-card-foreground border; /* Often no shadow, relies on border/whitespace */ }
+  .input { @apply bg-input border rounded-none px-3 py-2 placeholder:text-muted-foreground/60 focus:border-primary focus:ring-0; }
+}

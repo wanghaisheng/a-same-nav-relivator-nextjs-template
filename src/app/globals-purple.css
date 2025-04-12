@@ -1,0 +1,186 @@
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+/* --- BOLD & CREATIVE THEME --- */
+/* Description: High contrast, vibrant accents, sharp edges, modern feel. */
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  /* Base mapping - kept for potential component compatibility */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    /* Rely solely on the theme variable for borders */
+    border-color: var(--color-border, currentColor);
+     /* Subtle transition for theme changes */
+    transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  }
+
+  /* Optional: Add a more distinct focus ring */
+  *:focus-visible {
+      outline: 2px solid var(--color-ring);
+      outline-offset: 2px;
+  }
+   /* Remove default outline for elements with focus-visible */
+  *:focus {
+    outline: none;
+  }
+}
+
+/* --- Light Mode: High Contrast & Vibrant --- */
+:root {
+  --background: oklch(0.98 0.01 240); /* Slightly cool off-white */
+  --foreground: oklch(0.15 0.02 260); /* Very dark, slightly cool grey */
+  --card: oklch(1 0 0); /* Pure white cards for pop */
+  --card-foreground: oklch(0.15 0.02 260); /* Match foreground */
+  --popover: oklch(1 0 0); /* Pure white popovers */
+  --popover-foreground: oklch(0.15 0.02 260); /* Match foreground */
+  --primary: oklch(0.6 0.25 300);     /* Vibrant Magenta/Purple */
+  --primary-foreground: oklch(1 0 0); /* White */
+  --secondary: oklch(0.8 0.18 190);   /* Bright Cyan */
+  --secondary-foreground: oklch(0.1 0.01 220); /* Dark Blue/Indigo */
+  --muted: oklch(0.94 0.01 240);    /* Lighter cool gray */
+  --muted-foreground: oklch(0.45 0.02 250); /* Medium cool gray */
+  --accent: oklch(0.9 0.2 120);      /* Electric Lime Green */
+  --accent-foreground: oklch(0.15 0.02 120); /* Dark Green */
+  --destructive: oklch(0.65 0.28 25);    /* Strong Red-Orange */
+  --destructive-foreground: oklch(1 0 0); /* White */
+  --border: oklch(0.88 0.015 250);   /* More visible cool border */
+  --input: oklch(0.96 0.01 240);    /* Slightly off-white input bg */
+  --ring: oklch(0.6 0.25 300 / 0.6); /* Primary color for focus ring (semi-transparent) */
+
+  /* Chart Colors - Bold & Distinct */
+  --chart-1: oklch(0.6 0.25 300);    /* Magenta (Primary) */
+  --chart-2: oklch(0.8 0.18 190);    /* Cyan (Secondary) */
+  --chart-3: oklch(0.9 0.2 120);     /* Lime (Accent) */
+  --chart-4: oklch(0.7 0.25 50);     /* Bold Yellow/Orange */
+  --chart-5: oklch(0.5 0.2 240);     /* Deep Blue */
+
+  /* Radius - Sharper Edges */
+  --radius: 0.375rem; /* 6px - Slightly sharper than default */
+
+  /* Sidebar - Contrasting or Themed */
+  --sidebar: oklch(0.96 0.01 240);   /* Slightly different off-white */
+  --sidebar-foreground: oklch(0.15 0.02 260);
+  --sidebar-primary: oklch(0.6 0.25 300);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.9 0.2 120);
+  --sidebar-accent-foreground: oklch(0.15 0.02 120);
+  --sidebar-border: oklch(0.88 0.015 250);
+  --sidebar-ring: oklch(0.6 0.25 300 / 0.6);
+}
+
+/* --- Dark Mode: Deep & Neon --- */
+.dark {
+  --background: oklch(0.12 0.02 260); /* Very dark cool background */
+  --foreground: oklch(0.95 0.01 240); /* Light cool gray */
+  --card: oklch(0.15 0.02 260);   /* Slightly lighter dark for cards */
+  --card-foreground: oklch(0.95 0.01 240); /* Match foreground */
+  --popover: oklch(0.18 0.025 265); /* Even lighter dark for popovers */
+  --popover-foreground: oklch(0.98 0.005 240); /* Brighter foreground */
+  --primary: oklch(0.7 0.28 300);     /* Brighter Magenta/Purple */
+  --primary-foreground: oklch(0.05 0.01 300); /* Very dark purple */
+  --secondary: oklch(0.75 0.2 190);   /* Bright Cyan */
+  --secondary-foreground: oklch(0.98 0.005 240); /* Brighter foreground */
+  --muted: oklch(0.2 0.02 260);     /* Darker cool gray */
+  --muted-foreground: oklch(0.6 0.015 250); /* Medium-light cool gray */
+  --accent: oklch(0.85 0.22 120);    /* Bright Lime Green */
+  --accent-foreground: oklch(0.98 0.005 240); /* Brighter foreground */
+  --destructive: oklch(0.7 0.3 25);     /* Bright Red-Orange */
+  --destructive-foreground: oklch(0.1 0.02 25); /* Very dark red */
+  --border: oklch(0.25 0.02 260);    /* Visible darker border */
+  --input: oklch(0.22 0.02 260);     /* Slightly lighter input background */
+  --ring: oklch(0.7 0.28 300 / 0.7); /* Primary color focus ring (more opaque) */
+
+  /* Chart Colors - Neon Pop */
+  --chart-1: oklch(0.7 0.28 300);    /* Magenta (Primary) */
+  --chart-2: oklch(0.75 0.2 190);    /* Cyan (Secondary) */
+  --chart-3: oklch(0.85 0.22 120);   /* Lime (Accent) */
+  --chart-4: oklch(0.75 0.28 50);    /* Bright Yellow/Orange */
+  --chart-5: oklch(0.6 0.25 240);    /* Bright Blue */
+
+  /* Sidebar - Could be same or different dark */
+  --sidebar: oklch(0.10 0.015 260); /* Slightly darker sidebar */
+  --sidebar-foreground: oklch(0.95 0.01 240);
+  --sidebar-primary: oklch(0.7 0.28 300);
+  --sidebar-primary-foreground: oklch(0.05 0.01 300);
+  --sidebar-accent: oklch(0.85 0.22 120);
+  --sidebar-accent-foreground: oklch(0.98 0.005 240);
+  --sidebar-border: oklch(0.25 0.02 260);
+  --sidebar-ring: oklch(0.7 0.28 300 / 0.7);
+}
+
+@theme inline {
+  /* Map the CSS variables to Tailwind theme keys */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring); /* Mapped for potential use with outline/ring utilities */
+
+  /* Chart colors */
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+
+  /* Radius variants based on the new base radius */
+  --radius-sm: calc(var(--radius) - 2px); /* 4px */
+  --radius-md: var(--radius);             /* 6px */
+  --radius-lg: calc(var(--radius) + 4px); /* 10px */
+  --radius-xl: calc(var(--radius) + 8px); /* 14px */
+
+  /* Sidebar colors */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  /* Base styles using the theme */
+  * {
+    /* Apply border color defined above */
+    @apply border-border;
+     /* Define outline using the ring color, but make it transparent initially */
+     /* Use focus-visible variant in Tailwind for outline, or the CSS :focus-visible above */
+    /* outline-color: var(--color-ring); */ /* Handled by focus-visible rule */
+  }
+  body {
+    @apply bg-background text-foreground;
+    /* Optional: Add a default font stack that feels more modern/bold */
+    /* font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; */
+    /* Or a specific bold font if imported */
+    /* font-family: "Your Bold Font", sans-serif; */
+     -webkit-font-smoothing: antialiased;
+     -moz-osx-font-smoothing: grayscale;
+  }
+}

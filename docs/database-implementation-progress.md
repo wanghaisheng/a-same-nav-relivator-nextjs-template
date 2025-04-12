@@ -2,6 +2,12 @@
 
 ## 已完成任务
 
+
+add trending,popular,new,featured,best seller,best rated sections in home page.
+
+add submit tool page, concat with a checkout button to pay
+
+
 ### 1. 数据库架构设计
 - [x] 创建数据库模式
   - [x] 商品表 (items)
