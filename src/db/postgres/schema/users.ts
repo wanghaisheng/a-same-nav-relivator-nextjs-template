@@ -15,18 +15,13 @@ import {
   timestamp,
 } from "drizzle-orm/pg-core";
 
-export const userTable = pgTable("user", {
+export const users = pgTable("users", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
   email: text("email").notNull().unique(),
-  emailVerified: boolean("email_verified").notNull(),
   image: text("image"),
-  createdAt: timestamp("created_at").notNull(),
-  updatedAt: timestamp("updated_at").notNull(),
-  twoFactorEnabled: boolean("two_factor_enabled"),
-  age: integer("age"),
-  firstName: text("first_name"),
-  lastName: text("last_name"),
+  createdAt: timestamp("createdAt").defaultNow(),
+  updatedAt: timestamp("updatedAt").defaultNow(),
 });
 
 export const sessionTable = pgTable("session", {
@@ -39,7 +34,7 @@ export const sessionTable = pgTable("session", {
   userAgent: text("user_agent"),
   userId: text("user_id")
     .notNull()
-    .references(() => userTable.id, { onDelete: "cascade" }),
+    .references(() => users.id, { onDelete: "cascade" }),
 });
 
 export const accountTable = pgTable("account", {
@@ -48,7 +43,7 @@ export const accountTable = pgTable("account", {
   providerId: text("provider_id").notNull(),
   userId: text("user_id")
     .notNull()
-    .references(() => userTable.id, { onDelete: "cascade" }),
+    .references(() => users.id, { onDelete: "cascade" }),
   accessToken: text("access_token"),
   refreshToken: text("refresh_token"),
   idToken: text("id_token"),
@@ -75,5 +70,5 @@ export const twoFactorTable = pgTable("two_factor", {
   backupCodes: text("backup_codes").notNull(),
   userId: text("user_id")
     .notNull()
-    .references(() => userTable.id, { onDelete: "cascade" }),
+    .references(() => users.id, { onDelete: "cascade" }),
 });

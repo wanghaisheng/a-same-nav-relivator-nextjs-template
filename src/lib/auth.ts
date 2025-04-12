@@ -5,13 +5,29 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { twoFactor } from "better-auth/plugins";
 import { db } from "~/db";
-import {
-  accountTable,
-  sessionTable,
-  twoFactorTable,
-  userTable,
-  verificationTable,
-} from "~/db/schema";
+
+// Import schema tables based on environment
+const env = process.env.NEXT_PUBLIC_DATABASE_ENV;
+
+// Import the correct schema tables based on environment
+let accountTable, sessionTable, twoFactorTable, userTable, verificationTable;
+
+if (env === 'postgres') {
+  const pgSchema = require("~/db/postgres/schema/users");
+  accountTable = pgSchema.accountTable;
+  sessionTable = pgSchema.sessionTable;
+  twoFactorTable = pgSchema.twoFactorTable;
+  userTable = pgSchema.users; // Note: In postgres schema, the main user table is named 'users'
+  verificationTable = pgSchema.verificationTable;
+} else {
+  // Default to SQLite
+  const sqliteSchema = require("~/db/sqlite/schema/users");
+  accountTable = sqliteSchema.accountTable;
+  sessionTable = sqliteSchema.sessionTable;
+  twoFactorTable = sqliteSchema.twoFactorTable;
+  userTable = sqliteSchema.userTable;
+  verificationTable = sqliteSchema.verificationTable;
+}
 
 type GitHubProfile = {
   name?: string;
