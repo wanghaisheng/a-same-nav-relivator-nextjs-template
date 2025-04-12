@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { auth } from "~/lib/auth";
+import { auth } from "~/services/auth.sqlite";
 import { DashboardLayout } from "~/ui/components/layouts/dashboard-layout";
 
 export default async function DashboardRootLayout({

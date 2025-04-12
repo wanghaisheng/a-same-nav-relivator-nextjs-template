@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import type { User } from "~/db/types";
-import { auth } from "~/lib/auth";
+import { auth } from "~/services/auth.sqlite";
 import { DashboardPageClient } from "./client";
 
 export default async function DashboardPage() {
