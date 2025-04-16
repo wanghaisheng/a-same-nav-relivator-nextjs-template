@@ -1,145 +1,194 @@
-import { items, categories, testimonials, features } from '~/db/sqlite/schema';
 import { sqliteDb as db } from "~/db/sqlite";
 import { eq } from 'drizzle-orm';
+import { ebookItems } from '~/db/sqlite/schema/ebook_items';
+import { categories } from '~/db/sqlite/schema/categories';
+import { products } from '~/db/sqlite/schema/products';
+import { testimonials } from '~/db/sqlite/schema/testimonials';
+import { appItems } from '~/db/sqlite/schema/app_items';
+import { courseItems } from '~/db/sqlite/schema/course_items';
+import { gameItems } from '~/db/sqlite/schema/game_items';
+import { otherItems } from '~/db/sqlite/schema/other_items';
+import { websiteItems } from '~/db/sqlite/schema/website_items';
+import type { 
+  EbookItem, NewEbookItem, 
+  Category, NewCategory, 
+  Product, NewProduct, 
+  Testimonial, NewTestimonial, 
+  AppItem, NewAppItem, 
+  CourseItem, NewCourseItem, 
+  GameItem, NewGameItem, 
+  OtherItem, NewOtherItem, 
+  WebsiteItem, NewWebsiteItem 
+} from '@/db/types';
 
-// Type definitions
-type Item = typeof items.$inferSelect;
-type Category = typeof categories.$inferSelect;
-type Testimonial = typeof testimonials.$inferSelect;
-type Feature = typeof features.$inferSelect;
-
-// Items service
-export const itemsService = {
-  getAll: async (): Promise<Item[]> => {
-    return db.select().from(items).all();
-  },
-
-  getById: async (id: string): Promise<Item | null> => {
-    const result = await db.select().from(items).where(eq(items.id, id)).all();
-    return result.length > 0 ? result[0] : null;
-  },
-
-  create: async (data: Omit<Item, 'id' | 'createdAt' | 'updatedAt'>): Promise<Item | null> => {
+// Ebooks service
+export const ebooksService = {
+  // 新增电子书
+  create: async (data: Omit<NewEbookItem, 'id' | 'createdAt' | 'updatedAt'>): Promise<EbookItem | null> => {
     const newItem = {
       ...data,
       id: crypto.randomUUID(),
-      // SQLite使用integer存储时间戳，schema中已有默认值
     };
-    await db.insert(items).values(newItem).run();
-    return itemsService.getById(newItem.id);
+    await db.insert(ebookItems).values(newItem).run();
+    return ebooksService.getById(newItem.id);
   },
 
-  update: async (id: string, data: Partial<Item>): Promise<Item | null> => {
-    await db.update(items)
-      .set({ ...data })
-      .where(eq(items.id, id))
-      .run();
-    return itemsService.getById(id);
+  // 获取所有电子书
+  getAll: async (): Promise<EbookItem[]> => {
+    return db.select().from(ebookItems).all();
   },
 
-  delete: async (id: string): Promise<void> => {
-    await db.delete(items).where(eq(items.id, id)).run();
+  // 根据ID获取电子书
+  getById: async (id: string): Promise<EbookItem | null> => {
+    const result = await db.select().from(ebookItems).where(eq(ebookItems.id, id)).all();
+    return result.length > 0 ? result[0] : null;
   },
+  // 可按需扩展更多方法
 };
 
 // Categories service
 export const categoriesService = {
-  getAll: async (): Promise<Category[]> => {
-    return db.select().from(categories).all();
+  create: async (data: Omit<NewCategory, 'id' | 'createdAt' | 'updatedAt'>): Promise<Category | null> => {
+    const newItem = { ...data, id: crypto.randomUUID() };
+    await db.insert(categories).values(newItem).run();
+    return categoriesService.getById(newItem.id);
   },
-
+  getAll: async (): Promise<Category[]> => db.select().from(categories).all(),
   getById: async (id: string): Promise<Category | null> => {
     const result = await db.select().from(categories).where(eq(categories.id, id)).all();
     return result.length > 0 ? result[0] : null;
   },
+};
 
-  create: async (data: Omit<Category, 'id' | 'createdAt' | 'updatedAt'>): Promise<Category | null> => {
-    const newCategory = {
-      ...data,
-      id: crypto.randomUUID(),
-      // SQLite使用integer存储时间戳，schema中已有默认值
-    };
-    await db.insert(categories).values(newCategory).run();
-    return categoriesService.getById(newCategory.id);
+// Products service
+export const productsService = {
+  create: async (data: Omit<NewProduct, 'id' | 'createdAt' | 'updatedAt'>): Promise<Product | null> => {
+    const newItem = { ...data, id: crypto.randomUUID() };
+    await db.insert(products).values(newItem).run();
+    return productsService.getById(newItem.id);
   },
-
-  update: async (id: string, data: Partial<Category>): Promise<Category | null> => {
-    await db.update(categories)
-      .set({ ...data })
-      .where(eq(categories.id, id))
-      .run();
-    return categoriesService.getById(id);
-  },
-
-  delete: async (id: string): Promise<void> => {
-    await db.delete(categories).where(eq(categories.id, id)).run();
+  getAll: async (): Promise<Product[]> => db.select().from(products).all(),
+  getById: async (id: string): Promise<Product | null> => {
+    const result = await db.select().from(products).where(eq(products.id, id)).all();
+    return result.length > 0 ? result[0] : null;
   },
 };
 
 // Testimonials service
 export const testimonialsService = {
-  getAll: async (): Promise<Testimonial[]> => {
-    return db.select().from(testimonials).all();
+  create: async (data: Omit<NewTestimonial, 'id' | 'createdAt' | 'updatedAt'>): Promise<Testimonial | null> => {
+    const newItem = { ...data, id: crypto.randomUUID() };
+    await db.insert(testimonials).values(newItem).run();
+    return testimonialsService.getById(newItem.id);
   },
-
+  getAll: async (): Promise<Testimonial[]> => db.select().from(testimonials).all(),
   getById: async (id: string): Promise<Testimonial | null> => {
     const result = await db.select().from(testimonials).where(eq(testimonials.id, id)).all();
     return result.length > 0 ? result[0] : null;
   },
+};
 
-  create: async (data: Omit<Testimonial, 'id' | 'createdAt' | 'updatedAt'>): Promise<Testimonial | null> => {
-    const newTestimonial = {
-      ...data,
-      id: crypto.randomUUID(),
-      // SQLite使用integer存储时间戳，schema中已有默认值
-    };
-    await db.insert(testimonials).values(newTestimonial).run();
-    return testimonialsService.getById(newTestimonial.id);
+// App Items service
+export const appItemsService = {
+  create: async (data: Omit<NewAppItem, 'id' | 'createdAt' | 'updatedAt'>): Promise<AppItem | null> => {
+    const newItem = { ...data, id: crypto.randomUUID() };
+    await db.insert(appItems).values(newItem).run();
+    return appItemsService.getById(newItem.id);
   },
-
-  update: async (id: string, data: Partial<Testimonial>): Promise<Testimonial | null> => {
-    await db.update(testimonials)
-      .set({ ...data })
-      .where(eq(testimonials.id, id))
-      .run();
-    return testimonialsService.getById(id);
-  },
-
-  delete: async (id: string): Promise<void> => {
-    await db.delete(testimonials).where(eq(testimonials.id, id)).run();
+  getAll: async (): Promise<AppItem[]> => db.select().from(appItems).all(),
+  getById: async (id: string): Promise<AppItem | null> => {
+    const result = await db.select().from(appItems).where(eq(appItems.id, id)).all();
+    return result.length > 0 ? result[0] : null;
   },
 };
 
-// Features service
-export const featuresService = {
-  getAll: async (): Promise<Feature[]> => {
-    return db.select().from(features).all();
+// Course Items service
+export const courseItemsService = {
+  create: async (data: Omit<NewCourseItem, 'id' | 'createdAt' | 'updatedAt'>): Promise<CourseItem | null> => {
+    const newItem = { ...data, id: crypto.randomUUID() };
+    await db.insert(courseItems).values(newItem).run();
+    return courseItemsService.getById(newItem.id);
   },
-
-  getById: async (id: string): Promise<Feature | null> => {
-    const result = await db.select().from(features).where(eq(features.id, id)).all();
+  getAll: async (): Promise<CourseItem[]> => db.select().from(courseItems).all(),
+  getById: async (id: string): Promise<CourseItem | null> => {
+    const result = await db.select().from(courseItems).where(eq(courseItems.id, id)).all();
     return result.length > 0 ? result[0] : null;
   },
-
-  create: async (data: Omit<Feature, 'id' | 'createdAt' | 'updatedAt'>): Promise<Feature | null> => {
-    const newFeature = {
-      ...data,
-      id: crypto.randomUUID(),
-      // SQLite使用integer存储时间戳，schema中已有默认值
+  /**
+   * 获取课程详情并进行字段预处理（features、specs、价格、讲师、课程大纲等）
+   */
+  getByIdWithDefaults: async (id: string): Promise<any | null> => {
+    const course = await courseItemsService.getById(id);
+    if (!course) return null;
+    const features = course.features ? JSON.parse(course.features as string) : [];
+    const specs = course.specs ? JSON.parse(course.specs as string) : {};
+    const originalPrice = course.originalPrice || Number(course.price) * 1.2;
+    return {
+      ...course,
+      price: Number(course.price),
+      originalPrice: Number(originalPrice),
+      rating: course.rating ? Number(course.rating) : 4.0,
+      features,
+      specs,
+      duration: course.duration ? Number(course.duration) : 0,
+      level: course.level || "初级",
+      certification: Boolean(course.certification),
+      instructor: course.instructor || {
+        name: "专业讲师",
+        bio: "拥有多年教学经验的资深讲师",
+        avatar: "/placeholder-avatar.jpg"
+      },
+      curriculum: course.curriculum || [
+        { title: "课程介绍", duration: 15, preview: true },
+        { title: "基础概念", duration: 45, preview: false },
+        { title: "核心技术", duration: 60, preview: false },
+        { title: "实战项目", duration: 90, preview: false },
+        { title: "总结与展望", duration: 30, preview: false }
+      ],
+      students: course.students || 1250,
+      lastUpdated: course.lastUpdated || "2023-12-01"
     };
-    await db.insert(features).values(newFeature).run();
-    return featuresService.getById(newFeature.id);
   },
+};
 
-  update: async (id: string, data: Partial<Feature>): Promise<Feature | null> => {
-    await db.update(features)
-      .set({ ...data })
-      .where(eq(features.id, id))
-      .run();
-    return featuresService.getById(id);
+// Game Items service
+export const gameItemsService = {
+  create: async (data: Omit<NewGameItem, 'id' | 'createdAt' | 'updatedAt'>): Promise<GameItem | null> => {
+    const newItem = { ...data, id: crypto.randomUUID() };
+    await db.insert(gameItems).values(newItem).run();
+    return gameItemsService.getById(newItem.id);
   },
+  getAll: async (): Promise<GameItem[]> => db.select().from(gameItems).all(),
+  getById: async (id: string): Promise<GameItem | null> => {
+    const result = await db.select().from(gameItems).where(eq(gameItems.id, id)).all();
+    return result.length > 0 ? result[0] : null;
+  },
+};
 
-  delete: async (id: string): Promise<void> => {
-    await db.delete(features).where(eq(features.id, id)).run();
+// Other Items service
+export const otherItemsService = {
+  create: async (data: Omit<NewOtherItem, 'id' | 'createdAt' | 'updatedAt'>): Promise<OtherItem | null> => {
+    const newItem = { ...data, id: crypto.randomUUID() };
+    await db.insert(otherItems).values(newItem).run();
+    return otherItemsService.getById(newItem.id);
+  },
+  getAll: async (): Promise<OtherItem[]> => db.select().from(otherItems).all(),
+  getById: async (id: string): Promise<OtherItem | null> => {
+    const result = await db.select().from(otherItems).where(eq(otherItems.id, id)).all();
+    return result.length > 0 ? result[0] : null;
+  },
+};
+
+// Website Items service
+export const websiteItemsService = {
+  create: async (data: Omit<NewWebsiteItem, 'id' | 'createdAt' | 'updatedAt'>): Promise<WebsiteItem | null> => {
+    const newItem = { ...data, id: crypto.randomUUID() };
+    await db.insert(websiteItems).values(newItem).run();
+    return websiteItemsService.getById(newItem.id);
+  },
+  getAll: async (): Promise<WebsiteItem[]> => db.select().from(websiteItems).all(),
+  getById: async (id: string): Promise<WebsiteItem | null> => {
+    const result = await db.select().from(websiteItems).where(eq(websiteItems.id, id)).all();
+    return result.length > 0 ? result[0] : null;
   },
 };

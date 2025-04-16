@@ -2,6 +2,10 @@
 
 This guide provides step-by-step instructions for adding new features and components to the project.
 
+确保了即使数据中存在null值，组件也能正常渲染，不会因为空值引用导致错误，同时为用户提供了更友好的界面体验。
+
+
+
 ## Table of Contents
 1. [Project Architecture](#project-architecture)
 2. [Analyzing Requirements and User Flow](#analyzing-requirements-and-user-flow)
@@ -11,169 +15,247 @@ This guide provides step-by-step instructions for adding new features and compon
 6. [Adding a New API Router](#adding-a-new-api-router)
 7. [Adding a New Database Schema](#adding-a-new-database-schema)
 8. [Testing New Requirements](#testing-new-requirements)
+9. [Server and Client Component Interaction](#server-and-client-component-interaction)
 
 ## Project Architecture
 
 ### Database Architecture
 
-The project uses a dual-database approach with environment-based configuration:
+The project uses a dual-database approach with environment-based configuration, allowing seamless switching between SQLite and PostgreSQL:
 
-1. **Development Environment**
-   - Uses PostgreSQL with connection pooling for development
-   - Schema location: `src/db/postgres/schema/*`
-   - Asynchronous operations with `postgres-js`
-   - HMR-safe connection caching
+1. **Development Environment Options**
+   - **PostgreSQL**: Used for development with full feature set
+     - Schema location: `src/db/postgres/schema/*`
+     - Connection via `postgres-js` with connection pooling
+     - Asynchronous operations with proper error handling
+     - HMR-safe connection caching
+     - Full support for complex queries and relationships
+   
+   - **SQLite**: Lightweight alternative for local development
+     - Schema location: `src/db/sqlite/schema/*`
+     - Connection via `better-sqlite3`
+     - Simplified setup with no external database required
+     - File-based storage in `sqlite.db`
+     - Suitable for rapid development and testing
 
 2. **Production Environment**
    - Uses PostgreSQL for production deployment
    - Schema location: `src/db/postgres/schema/*`
-   - Asynchronous operations
-   - Better scalability and feature set
+   - Optimized for performance and scalability
+   - Full support for complex queries and relationships
+   - Transaction support for data integrity
+   - Proper error handling and connection management
 
 ### Database Configuration
 
 #### Environment-Based Configuration
-The project uses environment variables to determine database configuration:
+The project uses environment variables to determine database configuration, allowing dynamic switching between database types:
 
 ```bash
 # .env
 DATABASE_URL=postgresql://user:password@localhost:5432/dbname
 NEXT_PUBLIC_DATABASE_ENV=postgres  # or sqlite for SQLite mode
+SQLITE_DB_PATH=sqlite.db  # Optional: path to SQLite database file
 ```
+
+These environment variables control which database implementation is used throughout the application. The `NEXT_PUBLIC_DATABASE_ENV` variable is particularly important as it determines which service implementations are exported from the services layer.
 
 #### Database Client Setup
-The database client is configured with connection pooling and HMR support:
+The database client is configured with separate implementations for PostgreSQL and SQLite:
 
 ```typescript
-// src/db/index.ts
-import "dotenv/config";
+// src/db/postgres/index.ts
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
-import * as schema from "./schema";
 
-// Cache connection in development
-type DbConnection = ReturnType<typeof postgres>;
-const globalForDb = globalThis as unknown as {
-  conn?: DbConnection;
-};
-
-export const conn: DbConnection =
-  globalForDb.conn ?? postgres(process.env.DATABASE_URL ?? "");
-
-// Enable connection caching in development
-if (process.env.NODE_ENV !== "production") {
-  globalForDb.conn = conn;
-}
-
-// Database instance with schema
-export const db = drizzle(conn, { schema, logger: false });
+const connectionString = process.env.DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/relivator";
+const client = postgres(connectionString);
+export const postgresDb = drizzle(client);
 ```
 
+```typescript
+// src/db/sqlite/index.ts
+import { drizzle } from "drizzle-orm/better-sqlite3";
+import Database from "better-sqlite3";
+import * as schema from "./schema";
+
+const sqlite = new Database(process.env.SQLITE_DB_PATH ?? "sqlite.db");
+export const db = drizzle(sqlite, { schema });
+
+export const sqliteDb = drizzle(sqlite);
+```
+
+This approach allows for easy switching between database implementations while maintaining type safety and consistent interfaces.
+
 #### Schema Management
-The schema is managed with environment-aware exports:
+The schema is managed with separate implementations for PostgreSQL and SQLite, with each database type having its own schema definitions:
 
 ```typescript
-// src/db/schema.ts
-import * as sqliteSchema from './sqlite/schema';
-import * as postgresSchema from './postgres/schema';
-import { SQLiteTable } from 'drizzle-orm/sqlite-core';
-import { PgTable } from 'drizzle-orm/pg-core';
+// src/db/postgres/schema/index.ts
+export * from './users';
+export * from './items';
+export * from './products';
+export * from './categories';
+export * from './features';
+export * from './testimonials';
+```
 
-const env = process.env.NEXT_PUBLIC_DATABASE_ENV;
+```typescript
+// src/db/sqlite/schema/index.ts
+export * from './users';
+export * from './items';
+export * from './products';
+export * from './categories';
+export * from './features';
+export * from './testimonials';
+```
 
-const getSchema = () => {
-  switch (env) {
-    case 'postgres':
-      return postgresSchema;
-    case 'sqlite':
-    default:
-      return sqliteSchema;
+#### Seed Data Management
+The project includes seed data for all database tables to provide initial content for development and testing. Seed files are implemented for both PostgreSQL and SQLite:
+
+```typescript
+// src/db/sqlite/seed.ts or src/db/postgres/seed.ts
+export async function seed() {
+  try {
+    // Seed users
+    // ...
+
+    // Seed categories
+    // ...
+
+    // Seed products
+    // ...
+
+    // Seed testimonials
+    // ...
+
+    // Seed features
+    // ...
+
+    console.log("Database seeded successfully");
+  } catch (error) {
+    console.error("Error seeding database:", error);
+    throw error;
   }
-};
+}
+```
 
-export const schema = getSchema();
-export const {
-  users,
-  products,
-  categories,
-  items
-} = schema as {
-  users: SQLiteTable | PgTable;
-  products: SQLiteTable | PgTable;
-  categories: SQLiteTable | PgTable;
-  items: SQLiteTable | PgTable;
-};
+When adding new tables to the schema, you should also update the seed files to include initial data for those tables. This ensures that all components have data to display during development.
+export * from './items';
+export * from './products';
+export * from './categories';
+export * from './features';
+export * from './testimonials';
+```
+
+Each schema file defines tables with appropriate types for its database. For example, here's how the items table is defined for PostgreSQL:
+
+```typescript
+// src/db/postgres/schema/items.ts
+import { pgTable, text, integer, decimal, timestamp, boolean } from "drizzle-orm/pg-core";
+
+export const items = pgTable("items", {
+  id: text("id").primaryKey(),
+  name: text("name").notNull(),
+  description: text("description"),
+  price: decimal("price", { precision: 10, scale: 2 }).notNull(),
+  quantity: integer("quantity").notNull().default(0),
+  image: text("image"),
+  category: text("category"),
+  isTrending: boolean("is_trending").default(false),
+  isPopular: boolean("is_popular").default(false),
+  isNew: boolean("is_new").default(false),
+  isFeatured: boolean("is_featured").default(false),
+  isBestSeller: boolean("is_best_seller").default(false),
+  rating: decimal("rating", { precision: 3, scale: 1 }),
+  salesCount: integer("sales_count").default(0),
+  viewCount: integer("view_count").default(0),
+  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow(),
+});
 ```
 
 ### Service Layer Implementation
 
-Services are implemented with proper typing and error handling:
+The service layer is implemented with environment-specific implementations, allowing seamless switching between database types:
 
 ```typescript
-// src/services/services.ts
-import { items } from '~/db/schema';
-import { db } from '~/db';
+// src/services/index.ts
+/**
+ * Dynamic service implementation based on database environment
+ * This file exports the appropriate service implementation based on the NEXT_PUBLIC_DATABASE_ENV
+ * environment variable. This allows us to use different database schemas without type conflicts.
+ */
+
+// Import service implementations
+import * as sqliteServices from './services.sqlite';
+import * as postgresServices from './services.postgres';
+import {postgresAuthService} from './auth.postgres';
+import {sqliteAuthService} from './auth.sqlite';
+
+// Determine which implementation to use based on environment
+const env = process.env.NEXT_PUBLIC_DATABASE_ENV || 'sqlite';
+
+// Export the appropriate service implementation
+const services = env === 'postgres' ? postgresServices : sqliteServices;
+const authServiceImpl = env === 'postgres' ? postgresAuthService : sqliteAuthService;
+
+// Export individual services
+export const itemsService = services.itemsService;
+export const categoriesService = services.categoriesService;
+export const testimonialsService = services.testimonialsService;
+export const featuresService = services.featuresService;
+export const authService = authServiceImpl;
+```
+
+Each database-specific service implementation includes proper typing and error handling:
+
+```typescript
+// src/services/services.postgres.ts (example)
+import { items } from '~/db/postgres/schema';
+import { postgresDb as db } from "~/db/postgres";
 import { eq } from 'drizzle-orm';
 
+// Type definitions
 type Item = typeof items.$inferSelect;
 
+// Items service
 export const itemsService = {
   getAll: async (): Promise<Item[]> => {
-    try {
-      const result = await db.select().from(items);
-      return result;
-    } catch (error) {
-      console.error('Error fetching items:', error);
-      throw error;
-    }
+    return db.select().from(items).execute();
   },
 
   getById: async (id: string): Promise<Item | null> => {
-    try {
-      const [result] = await db
-        .select()
-        .from(items)
-        .where(eq(items.id, id));
-      return result || null;
-    } catch (error) {
-      console.error(`Error fetching item ${id}:`, error);
-      throw error;
-    }
+    const result = await db.select().from(items).where(eq(items.id, id)).execute();
+    return result.length > 0 ? result[0] : null;
   },
 
-  create: async (data: Omit<Item, 'id' | 'createdAt' | 'updatedAt'>): Promise<Item> => {
-    try {
-      const newItem = {
-        ...data,
-        id: crypto.randomUUID(),
-        createdAt: new Date(),
-        updatedAt: new Date(),
-      };
-      const [result] = await db
-        .insert(items)
-        .values(newItem)
-        .returning();
-      return result;
-    } catch (error) {
-      console.error('Error creating item:', error);
-      throw error;
-    }
+  create: async (data: Omit<Item, 'id' | 'createdAt' | 'updatedAt'>): Promise<Item | null> => {
+    const newItem = {
+      ...data,
+      id: crypto.randomUUID(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    await db.insert(items).values(newItem).execute();
+    return itemsService.getById(newItem.id);
   }
 };
+```
 ```
 
 ### API Route Implementation
 
+API routes are implemented using Next.js App Router API routes, with proper error handling and service layer integration:
+
 ```typescript
 // src/app/api/items/route.ts
 import { NextResponse } from "next/server";
-import { db } from "~/db";
-import { items } from "~/db/schema";
-import { eq } from "drizzle-orm";
+import { itemsService } from "~/services";
 
 export async function GET(request: Request) {
   try {
-    const data = await db.select().from(items);
+    const data = await itemsService.getAll();
     return NextResponse.json(data);
   } catch (error) {
     console.error("Error fetching items:", error);
@@ -187,16 +269,15 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const newItem = {
-      ...body,
-      id: crypto.randomUUID(),
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    };
-    const [created] = await db
-      .insert(items)
-      .values(newItem)
-      .returning();
+    const created = await itemsService.create(body);
+    
+    if (!created) {
+      return NextResponse.json(
+        { error: "Failed to create item" },
+        { status: 400 }
+      );
+    }
+    
     return NextResponse.json(created);
   } catch (error) {
     console.error("Error creating item:", error);
@@ -208,39 +289,686 @@ export async function POST(request: Request) {
 }
 ```
 
+This approach ensures that:
+
+1. Business logic is encapsulated in the service layer
+2. API routes are thin controllers that delegate to services
+3. Error handling is consistent across all endpoints
+4. Database-specific implementation details are abstracted away
+```
+
+### Frontend Architecture
+
+#### Next.js App Router Structure
+
+The project uses Next.js App Router for routing and rendering, with a clear separation between server and client components:
+
+1. **Server Components**
+   - Used for data fetching and initial rendering
+   - Located in `src/app` directory with page.tsx and layout.tsx files
+   - Directly import services for data access
+   - Provide data to client components via props
+   - Handle server-side rendering and static generation
+
+2. **Client Components**
+   - Used for interactive UI elements
+   - Marked with 'use client' directive
+   - Located in `src/components` and `src/ui` directories
+   - Handle client-side state and user interactions
+   - Use React hooks for data fetching and state management
+
+3. **Layouts and Templates**
+   - Shared layouts in layout.tsx files
+   - Nested layouts for section-specific UI
+   - Loading states with loading.tsx
+   - Error handling with error.tsx
+   - Not-found handling with not-found.tsx
+
+#### UI Component Organization
+
+UI components are organized in a hierarchical structure:
+
+1. **Primitives** (`src/ui/primitives`)
+   - Basic UI building blocks
+   - Highly reusable and composable
+   - Minimal business logic
+   - Examples: Button, Input, Card, etc.
+
+2. **Compound Components** (`src/ui/components`)
+   - Composed of multiple primitives
+   - Encapsulate specific UI patterns
+   - May contain limited business logic
+   - Examples: ProductCard, SearchBar, etc.
+
+3. **Feature Components** (`src/components`)
+   - Business-specific components
+   - Integrate with services and state
+   - Implement specific features
+   - Examples: ProductList, ShoppingCart, etc.
+
+4. **Page Components** (`src/app/**/page.tsx`)
+   - Top-level components for routes
+   - Compose feature components
+   - Handle data fetching and layout
+   - Implement page-specific logic
+
+### State Management
+
+The project uses a combination of state management approaches:
+
+1. **Local Component State**
+   - React's useState and useReducer hooks
+   - Used for component-specific state
+   - Isolated to individual components
+   - Examples: form state, UI toggles, etc.
+
+2. **Server State**
+   - Data fetched from API endpoints
+   - Managed with React Query or SWR
+   - Handles caching, refetching, and synchronization
+   - Examples: product data, user profile, etc.
+
+3. **Global State**
+   - Used sparingly for truly global concerns
+   - Implemented with React Context or Zustand
+   - Examples: authentication state, theme preferences, etc.
+
+4. **URL State**
+   - State derived from URL parameters
+   - Used for shareable and bookmarkable state
+   - Examples: search filters, pagination, etc.
+
+### Data Flow Architecture
+
+The project follows a clear data flow pattern:
+
+1. **Data Sources**
+   - Database (PostgreSQL or SQLite)
+   - External APIs
+   - Local storage
+   - URL parameters
+
+2. **Data Access Layer**
+   - Database clients (Drizzle ORM)
+   - API clients for external services
+   - Storage utilities for local data
+
+3. **Service Layer**
+   - Business logic implementation
+   - Database operations abstraction
+   - Error handling and validation
+   - Type-safe interfaces
+
+4. **API Routes**
+   - RESTful endpoints for data access
+   - Authentication and authorization
+   - Request validation
+   - Response formatting
+
+5. **UI Components**
+   - Data fetching with React Query/SWR
+   - State management with React hooks
+   - User interaction handling
+   - UI rendering and updates
+
 ### Important Notes
 
 1. **Database Operations**
    - All database operations are asynchronous
-   - Use `try-catch` blocks for error handling
-   - Use proper typing with `$inferSelect`
+   - Database-specific implementations are isolated in separate files
+   - Use proper typing with `$inferSelect` for type safety
    - Always handle the case where no results are found
+   - Use transactions for operations that modify multiple tables
 
 2. **Environment Handling**
-   - Check `NEXT_PUBLIC_DATABASE_ENV` for database type
-   - Use connection pooling in development
-   - Cache database connections for HMR
-   - Use proper schema based on environment
+   - Use `NEXT_PUBLIC_DATABASE_ENV` to determine database type
+   - Default to SQLite if environment variable is not set
+   - Use connection pooling for PostgreSQL in development
+   - Cache database connections for HMR compatibility
+   - Use appropriate schema based on environment
 
-3. **Type Safety**
-   - Use `$inferSelect` from table definitions
-   - Handle nullable fields appropriately
-   - Use proper type annotations in services
-   - Use type assertions carefully with schema exports
+3. **Service Layer Implementation**
+   - Implement database-specific services in separate files
+   - Export unified service interfaces through index.ts
+   - Use consistent method signatures across implementations
+   - Handle database-specific error types appropriately
+   - Provide comprehensive error logging
 
-4. **Best Practices**
-   - Log errors with proper context
-   - Use transactions for multiple operations
+4. **Type Safety**
+   - Use `$inferSelect` from table definitions for type inference
+   - Handle nullable fields with proper type guards
+   - Use consistent type annotations across services
+   - Avoid type assertions except when necessary
+   - Ensure schema exports maintain type safety
+
+5. **Best Practices**
+   - Log errors with proper context and stack traces
    - Validate input data before database operations
    - Keep services focused and modular
    - Use proper error responses in API routes
+   - Implement proper pagination for list endpoints
+   - Use query parameters for filtering and sorting
 
-5. **Testing Considerations**
-   - Use a test database for integration tests
+6. **Testing Considerations**
+   - Use a dedicated test database for integration tests
    - Mock database operations in unit tests
-   - Test error cases and edge conditions
-   - Clean up test data after each test
+   - Test error cases and edge conditions thoroughly
+   - Clean up test data after each test run
    - Use proper typing in test files
+   - Test both SQLite and PostgreSQL implementations
+
+7. **Performance Optimization**
+   - Use React.memo for expensive components
+   - Implement virtualization for long lists
+   - Optimize database queries with proper indexes
+   - Use edge caching for static content
+   - Implement incremental static regeneration where appropriate
+   - Minimize client-side JavaScript with server components
+
+## Server and Client Component Interaction
+
+在Next.js App Router架构中，正确处理服务器组件和客户端组件之间的交互对于构建高性能、可维护的应用至关重要。本节将详细介绍如何实现服务器组件获取数据并传递给客户端组件的模式，以及何时应该使用这种模式。
+
+### 服务器组件和客户端组件交互的最佳实践
+
+#### 1. 数据获取与传递模式
+
+服务器组件应负责数据获取，然后将数据作为props传递给客户端组件。这种模式有以下优势：
+
+- 减少客户端JavaScript包大小
+- 避免客户端发起额外的API请求
+- 提高首次加载性能
+- 改善SEO
+- 保持代码分离和关注点分离
+
+**示例实现：**
+
+```typescript
+// src/app/courses/page.tsx (服务器组件)
+import { Suspense } from "react";
+import { coursesService, categoriesService } from "~/services/";
+import { CourseListPage } from "~/ui/components/CourseListPage";
+import { Header } from "~/ui/components/header";
+import { Footer } from "~/ui/components/footer";
+import { LoadingSpinner } from "~/ui/components/LoadingSpinner";
+
+// 从服务器获取所有课程
+async function getCourses() {
+  try {
+    const courses = await coursesService.getAll();
+    
+    // 处理数据
+    return courses.map(course => ({
+      ...course,
+      features: course.features ? JSON.parse(course.features as string) : [],
+      specs: course.specs ? JSON.parse(course.specs as string) : {}
+    }));
+  } catch (error) {
+    console.error("Error fetching courses:", error);
+    return [];
+  }
+}
+
+// 获取所有课程分类
+async function getCourseCategories() {
+  try {
+    const categories = await categoriesService.getAll();
+    return ["All", ...categories.map(category => category.name)];
+  } catch (error) {
+    console.error("Error fetching course categories:", error);
+    return ["All"];
+  }
+}
+
+export default async function CoursesPage() {
+  // 在服务器组件中获取数据
+  const courses = await getCourses();
+  const categories = await getCourseCategories();
+
+  return (
+    <div className="flex min-h-screen flex-col">
+      <Header />
+      <main className="flex-1 py-10">
+        <Suspense fallback={<LoadingSpinner />}>
+          {/* 将数据作为props传递给客户端组件 */}
+          <CourseListPage 
+            initialCourses={courses} 
+            categories={categories}
+            title="课程列表"
+            description="浏览我们精选的在线课程，提升您的技能和知识"
+          />
+        </Suspense>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+```
+
+```typescript
+// src/ui/components/CourseListPage.tsx (客户端组件)
+"use client";
+
+import { useState, useEffect } from "react";
+import { CourseCard } from "./CourseCard";
+import { CategoryFilter } from "./CategoryFilter";
+
+interface Course {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  category: string;
+  features: string[];
+  specs: Record<string, any>;
+  // 其他属性...
+}
+
+interface CourseListPageProps {
+  initialCourses: Course[];
+  categories: string[];
+  title: string;
+  description: string;
+}
+
+export function CourseListPage({ 
+  initialCourses, 
+  categories, 
+  title, 
+  description 
+}: CourseListPageProps) {
+  // 客户端状态管理
+  const [courses, setCourses] = useState<Course[]>(initialCourses);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  // 客户端过滤逻辑
+  useEffect(() => {
+    if (selectedCategory === "All" && searchTerm === "") {
+      setCourses(initialCourses);
+      return;
+    }
+    
+    const filtered = initialCourses.filter(course => {
+      const matchesCategory = selectedCategory === "All" || course.category === selectedCategory;
+      const matchesSearch = searchTerm === "" || 
+        course.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.description.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      return matchesCategory && matchesSearch;
+    });
+    
+    setCourses(filtered);
+  }, [selectedCategory, searchTerm, initialCourses]);
+
+  return (
+    <div className="container mx-auto px-4">
+      <div className="text-center mb-10">
+        <h1 className="text-3xl font-bold mb-2">{title}</h1>
+        <p className="text-gray-600">{description}</p>
+      </div>
+      
+      <div className="mb-6">
+        <div className="flex flex-col md:flex-row justify-between gap-4">
+          <CategoryFilter 
+            categories={categories} 
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+          />
+          
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="搜索课程..."
+              className="w-full md:w-64 px-4 py-2 border rounded-lg"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+      
+      {courses.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {courses.map(course => (
+            <CourseCard key={course.id} course={course} />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-10">
+          <p className="text-gray-500">没有找到匹配的课程</p>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+#### 2. 何时使用服务器组件获取数据并传递给客户端组件
+
+以下情况适合使用服务器组件获取数据并传递给客户端组件：
+
+- **需要SEO优化的页面**：搜索引擎可以直接看到服务器渲染的内容
+- **数据需要直接访问数据库或后端服务**：避免暴露敏感的API端点或凭证
+- **初始页面加载性能至关重要**：减少客户端JavaScript包大小和网络请求
+- **页面包含大量静态内容和少量交互元素**：大部分内容可以在服务器上渲染
+- **需要进行复杂数据处理**：在服务器上处理数据可以减轻客户端负担
+
+#### 3. 何时使用API路由更合适
+
+以下情况可能更适合使用API路由：
+
+- **需要实时数据更新**：客户端需要定期刷新数据或使用WebSocket
+- **用户特定的数据操作**：基于用户操作需要获取不同的数据
+- **分页、排序和复杂过滤**：当这些操作需要从服务器获取新数据而不是在客户端过滤
+- **表单提交和数据修改**：需要向服务器发送数据并获取响应
+- **认证和授权**：需要在每个请求中验证用户身份和权限
+
+#### 4. 混合方法：初始数据 + API路由更新
+
+在许多情况下，最佳方法是结合使用两种模式：
+
+1. 使用服务器组件获取并传递初始数据
+2. 使用API路由处理后续数据更新和用户交互
+
+```typescript
+// 混合方法示例
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+
+interface DataListProps {
+  initialData: any[];
+}
+
+export function DataList({ initialData }: DataListProps) {
+  const [data, setData] = useState(initialData);
+  const [page, setPage] = useState(1);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  // 处理分页或其他需要新数据的操作
+  async function loadMoreData() {
+    const nextPage = page + 1;
+    const response = await fetch(`/api/data?page=${nextPage}`);
+    const newData = await response.json();
+    
+    setData([...data, ...newData]);
+    setPage(nextPage);
+    
+    // 更新URL以支持共享和书签
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", nextPage.toString());
+    router.push(`?${params.toString()}`);
+  }
+
+  return (
+    <div>
+      {/* 显示数据 */}
+      <div className="grid grid-cols-3 gap-4">
+        {data.map(item => (
+          <div key={item.id} className="border p-4 rounded">
+            {item.name}
+          </div>
+        ))}
+      </div>
+      
+      {/* 加载更多按钮 */}
+      <button 
+        onClick={loadMoreData}
+        className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+      >
+        加载更多
+      </button>
+    </div>
+  );
+}
+```
+
+### 实际案例：重构courses/page.tsx
+
+以下是将courses/page.tsx重构为服务器组件获取数据并传递给客户端组件CourseListPage的完整示例：
+
+#### 重构前（假设是客户端组件获取数据）：
+
+```typescript
+// 重构前：客户端组件自己获取数据
+"use client";
+
+import { useState, useEffect } from "react";
+import { Header } from "~/ui/components/header";
+import { Footer } from "~/ui/components/footer";
+import { CourseCard } from "~/ui/components/CourseCard";
+
+export default function CoursesPage() {
+  const [courses, setCourses] = useState([]);
+  const [categories, setCategories] = useState(["All"]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  // 客户端获取数据
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true);
+        
+        // 获取课程数据
+        const coursesResponse = await fetch("/api/courses");
+        const coursesData = await coursesResponse.json();
+        
+        // 获取分类数据
+        const categoriesResponse = await fetch("/api/categories");
+        const categoriesData = await categoriesResponse.json();
+        
+        setCourses(coursesData);
+        setCategories(["All", ...categoriesData.map(c => c.name)]);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    
+    fetchData();
+  }, []);
+  
+  // 其余组件逻辑...
+}
+```
+
+#### 重构后（服务器组件获取数据并传递给客户端组件）：
+
+```typescript
+// src/app/courses/page.tsx (服务器组件)
+import { Suspense } from "react";
+import { coursesService, categoriesService } from "~/services/";
+import { CourseListPage } from "~/ui/components/CourseListPage";
+import { Header } from "~/ui/components/header";
+import { Footer } from "~/ui/components/footer";
+import { LoadingSpinner } from "~/ui/components/LoadingSpinner";
+
+// 从服务器获取所有课程
+async function getCourses() {
+  try {
+    const courses = await coursesService.getAll();
+    
+    // 处理数据
+    return courses.map(course => ({
+      ...course,
+      features: course.features ? JSON.parse(course.features as string) : [],
+      specs: course.specs ? JSON.parse(course.specs as string) : {}
+    }));
+  } catch (error) {
+    console.error("Error fetching courses:", error);
+    return [];
+  }
+}
+
+// 获取所有课程分类
+async function getCourseCategories() {
+  try {
+    const categories = await categoriesService.getAll();
+    return ["All", ...categories.map(category => category.name)];
+  } catch (error) {
+    console.error("Error fetching course categories:", error);
+    return ["All"];
+  }
+}
+
+export default async function CoursesPage() {
+  // 在服务器组件中获取数据
+  const courses = await getCourses();
+  const categories = await getCourseCategories();
+
+  return (
+    <div className="flex min-h-screen flex-col">
+      <Header />
+      <main className="flex-1 py-10">
+        <Suspense fallback={<LoadingSpinner />}>
+          {/* 将数据作为props传递给客户端组件 */}
+          <CourseListPage 
+            initialCourses={courses} 
+            categories={categories}
+            title="课程列表"
+            description="浏览我们精选的在线课程，提升您的技能和知识"
+          />
+        </Suspense>
+      </main>
+      <Footer />
+    </div>
+  );
+}
+```
+
+```typescript
+// src/ui/components/CourseListPage.tsx (客户端组件)
+"use client";
+
+import { useState, useEffect } from "react";
+import { CourseCard } from "./CourseCard";
+import { CategoryFilter } from "./CategoryFilter";
+
+interface Course {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  image: string;
+  category: string;
+  features: string[];
+  specs: Record<string, any>;
+  // 其他属性...
+}
+
+interface CourseListPageProps {
+  initialCourses: Course[];
+  categories: string[];
+  title: string;
+  description: string;
+}
+
+export function CourseListPage({ 
+  initialCourses, 
+  categories, 
+  title, 
+  description 
+}: CourseListPageProps) {
+  // 客户端状态管理
+  const [courses, setCourses] = useState<Course[]>(initialCourses);
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  // 客户端过滤逻辑
+  useEffect(() => {
+    if (selectedCategory === "All" && searchTerm === "") {
+      setCourses(initialCourses);
+      return;
+    }
+    
+    const filtered = initialCourses.filter(course => {
+      const matchesCategory = selectedCategory === "All" || course.category === selectedCategory;
+      const matchesSearch = searchTerm === "" || 
+        course.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.description.toLowerCase().includes(searchTerm.toLowerCase());
+      
+      return matchesCategory && matchesSearch;
+    });
+    
+    setCourses(filtered);
+  }, [selectedCategory, searchTerm, initialCourses]);
+
+  return (
+    <div className="container mx-auto px-4">
+      <div className="text-center mb-10">
+        <h1 className="text-3xl font-bold mb-2">{title}</h1>
+        <p className="text-gray-600">{description}</p>
+      </div>
+      
+      <div className="mb-6">
+        <div className="flex flex-col md:flex-row justify-between gap-4">
+          <CategoryFilter 
+            categories={categories} 
+            selectedCategory={selectedCategory}
+            onSelectCategory={setSelectedCategory}
+          />
+          
+          <div className="relative">
+            <input
+              type="text"
+              placeholder="搜索课程..."
+              className="w-full md:w-64 px-4 py-2 border rounded-lg"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+        </div>
+      </div>
+      
+      {courses.length > 0 ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {courses.map(course => (
+            <CourseCard key={course.id} course={course} />
+          ))}
+        </div>
+      ) : (
+        <div className="text-center py-10">
+          <p className="text-gray-500">没有找到匹配的课程</p>
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+### 重构的优势
+
+1. **性能提升**：
+   - 减少了客户端JavaScript包大小
+   - 消除了客户端的数据获取请求
+   - 加快了首次内容绘制(FCP)和首次可交互时间(TTI)
+
+2. **用户体验改善**：
+   - 页面加载时已有完整数据，无需显示加载状态
+   - 减少了布局偏移(CLS)
+   - 即使在JavaScript禁用的环境中也能显示内容
+
+3. **开发体验优化**：
+   - 关注点分离更清晰
+   - 服务器组件处理数据获取，客户端组件处理交互
+   - 错误处理更集中
+   - 类型安全从服务器到客户端
+
+4. **SEO改善**：
+   - 搜索引擎可以直接抓取完整内容
+   - 元数据可以动态生成
+
+5. **安全性提升**：
+   - 敏感操作保留在服务器端
+   - 无需暴露额外的API端点
+
+通过这种模式，我们可以充分利用Next.js App Router架构的优势，在保持服务器组件数据获取能力的同时，利用客户端组件的交互能力，创建高性能、可维护的应用。
 
 ## Analyzing Requirements and User Flow
 
@@ -653,22 +1381,67 @@ mkdir -p src/app/your-page
 touch src/app/your-page/page.tsx
 ```
 
-### 2. Basic Page Structure
+### 2. Server vs Client Components
+
+#### Important: Default to Server Components
+
+In Next.js App Router, **pages are Server Components by default**. You should maintain this default whenever possible and avoid unnecessarily converting pages to Client Components.
+
+**Server Components Benefits:**
+- Improved performance (smaller bundle size, no JS shipped to client)
+- Direct access to backend resources (database, services)
+- Better SEO (faster initial load, better indexing)
+- Automatic code splitting
+- Security (sensitive code never reaches the client)
+
+**When to use Server Components (default):**
+- Pages that primarily display data
+- SEO-critical pages
+- Pages with minimal interactivity
+- Pages that need direct access to backend resources
+
+**When to use Client Components (add "use client" directive):**
+- Components that use React hooks (useState, useEffect, etc.)
+- Components that need browser APIs
+- Components with event listeners
+- Components that use custom hooks
+- Components that use React Context
+
+#### Mixing Server and Client Components
+
+The recommended pattern is to keep pages as Server Components and only convert specific interactive components to Client Components:
+
+```
+// Server Component (page.tsx)
+|
+├── ServerComponent1
+├── ServerComponent2
+└── ClientComponent ("use client") 
+    ├── ClientSubComponent1
+    └── ClientSubComponent2
+```
+
+### 3. Basic Page Structure (Server Component)
+
 ```typescript
 // src/app/your-page/page.tsx
-"use client";
+// No "use client" directive - this is a Server Component
 
 import { Header } from "~/ui/components/header";
 import { YourComponent } from "~/ui/components/your-component";
+import { getDataFromService } from "~/services/your-service";
 
-export default function YourPage() {
+export default async function YourPage() {
+  // Data fetching directly in Server Component
+  const data = await getDataFromService();
+  
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
       <main className="flex-1 py-10">
         <div className="container px-4 md:px-6">
-          {/* Your page content */}
-          <YourComponent />
+          {/* Pass data to components */}
+          <YourComponent data={data} />
         </div>
       </main>
     </div>
@@ -676,12 +1449,218 @@ export default function YourPage() {
 }
 ```
 
-### 3. Add Navigation
+### 4. Client Component Example (Only When Needed)
+
+```typescript
+// src/ui/components/your-interactive-component.tsx
+"use client";
+
+import { useState } from "react";
+
+interface InteractiveComponentProps {
+  initialData: any;
+}
+
+export function InteractiveComponent({ initialData }: InteractiveComponentProps) {
+  const [data, setData] = useState(initialData);
+  
+  // Client-side interactivity
+  const handleClick = () => {
+    setData({ ...data, clicked: true });
+  };
+  
+  return (
+    <div>
+      <button onClick={handleClick}>Update State</button>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+    </div>
+  );
+}
+```
+```
+
+### 5. Add Navigation
 Update the navigation component to include the new page:
 ```typescript
 // src/ui/components/header.tsx
 <Link href="/your-page">Your Page</Link>
 ```
+
+### 6. Best Practices for Component Type Selection
+
+#### Anti-Patterns to Avoid
+
+1. **Don't convert entire pages to Client Components unnecessarily**
+   ```typescript
+   // ❌ BAD: Converting the entire page to a Client Component
+   "use client";
+   
+   export default function Page() {
+     // Only one small part needs interactivity
+     return <div>...</div>;
+   }
+   ```
+   
+   ```typescript
+   // ✅ GOOD: Keep the page as a Server Component and isolate client code
+   // page.tsx (Server Component)
+   import { InteractiveWidget } from "~/components/interactive-widget";
+   
+   export default function Page() {
+     return (
+       <div>
+         <h1>My Page</h1>
+         <InteractiveWidget /> {/* This is a Client Component */}
+       </div>
+     );
+   }
+   ```
+
+2. **Don't fetch data in Client Components when it can be done in Server Components**
+   ```typescript
+   // ❌ BAD: Fetching data in a Client Component
+   "use client";
+   
+   import { useEffect, useState } from "react";
+   
+   export default function Page() {
+     const [data, setData] = useState(null);
+     
+     useEffect(() => {
+       fetch('/api/data')
+         .then(res => res.json())
+         .then(data => setData(data));
+     }, []);
+     
+     return <div>{data ? <DisplayData data={data} /> : <Loading />}</div>;
+   }
+   ```
+   
+   ```typescript
+   // ✅ GOOD: Fetch data in the Server Component
+   // page.tsx (Server Component)
+   import { getData } from "~/services/data-service";
+   import { DisplayData } from "~/components/display-data";
+   
+   export default async function Page() {
+     const data = await getData();
+     
+     return <DisplayData data={data} />;
+   }
+   ```
+
+3. **Don't modify existing Server Components to Client Components during feature additions**
+   ```typescript
+   // ❌ BAD: Converting an existing Server Component to a Client Component
+   // Before: page.tsx (Server Component)
+   // After adding a feature:
+   "use client";
+   
+   export default function Page() {
+     // Added a small interactive feature and converted the whole page
+     return <div>...</div>;
+   }
+   ```
+   
+   ```typescript
+   // ✅ GOOD: Extract the interactive part to a separate Client Component
+   // page.tsx (remains a Server Component)
+   import { NewFeature } from "~/components/new-feature";
+   
+   export default function Page() {
+     return (
+       <div>
+         <h1>Existing Content</h1>
+         <NewFeature /> {/* New interactive feature as a Client Component */}
+       </div>
+     );
+   }
+   ```
+
+#### Data Flow Between Server and Client Components
+
+1. **Pass data from Server to Client Components as props**
+   ```typescript
+   // Server Component
+   import { ClientComponent } from "~/components/client-component";
+   
+   export default async function Page() {
+     const data = await fetchData();
+     
+     return <ClientComponent initialData={data} />;
+   }
+   ```
+
+2. **Use Server Actions for form submissions and data mutations**
+   ```typescript
+   // Server action in a separate file
+   'use server';
+   
+   export async function submitForm(formData: FormData) {
+     // Process form data on the server
+     // Update database
+     return { success: true };
+   }
+   ```
+   
+   ```typescript
+   // Client Component using server action
+   'use client';
+   
+   import { submitForm } from "~/actions/form-actions";
+   
+   export function FormComponent() {
+     return (
+       <form action={submitForm}>
+         {/* Form fields */}
+         <button type="submit">Submit</button>
+       </form>
+     );
+   }
+   ```
+
+#### Performance Optimization with Server Components
+
+1. **Streaming and Suspense**
+   ```typescript
+   // page.tsx (Server Component)
+   import { Suspense } from "react";
+   import { SlowDataComponent } from "~/components/slow-data";
+   
+   export default function Page() {
+     return (
+       <div>
+         <h1>Instant Header</h1>
+         <Suspense fallback={<div>Loading...</div>}>
+           <SlowDataComponent /> {/* This component can stream in later */}
+         </Suspense>
+       </div>
+     );
+   }
+   ```
+
+2. **Parallel Data Fetching**
+   ```typescript
+   // page.tsx (Server Component)
+   export default async function Page() {
+     // Start both requests in parallel
+     const productsPromise = getProducts();
+     const categoriesPromise = getCategories();
+     
+     // Wait for both to complete
+     const [products, categories] = await Promise.all([
+       productsPromise,
+       categoriesPromise
+     ]);
+     
+     return (
+       <div>
+         <ProductList products={products} />
+         <CategoryFilter categories={categories} />
+       </div>
+     );
+   }
+   ```
 
 ## Adding New Components
 

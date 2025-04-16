@@ -1,127 +1,109 @@
-https://alternativeto.net/software/cara/about/
+# 商品详情页模板
 
+## (I) 页面头部
 
-detail page components
+* **面包屑导航:** `[网站区域] > [分类路径] > [商品名称] > [当前视图 (例如: 概览)]`
 
+## (II) 主要商品信息
 
-https://www.awwwards.com/
+* **商品名称:** `<h1>[商品名称]</h1>`
+* **商品图片/视频:** 
+  * `[主图片/视频]`
+  * `[缩略图1] [缩略图2] [缩略图3]...`
+* **属性组 1 (例如: 许可证类型):**
+  * `标签: [属性组1名称]`
+  * `标签: [属性标签1.1] [属性标签1.2]`
+* **属性组 2 (例如: 平台支持):**
+  * `标签: [属性组2名称]`
+  * `标签: [属性标签2.1] [属性标签2.2]`
+* **媒体库:**
+  * `[缩略图1] [缩略图2] [缩略图3]...`
 
+## (III) 关键指标
 
+* **指标 1:** `[图标] [数值] [标签 (例如: 评分)]`
+* **指标 2:** `[图标] [数值] [标签 (例如: 评论数)]`
+* **指标 3:** `[图标] [数值] [标签 (例如: 下载量)]`
+* **指标 4:** `[图标] [数值] [标签 (例如: 替代品数)]`
+* **指标 5:** `[图标] [数值] [标签 (例如: 查看次数)]`
+* **贡献按钮:** `[按钮/链接: 贡献/建议编辑]`
 
-```
-Okay, here is a template for a Product Detail Page based on the structure and elements observed in the AlternativeTo Cara page screenshot. This template uses placeholders `[like_this]` to indicate where specific product data would be inserted.
+## (IV) 价格与购买区域
 
----
+* **价格信息:** `[当前价格] [原价(如有折扣)] [折扣百分比]`
+* **库存状态:** `[库存状态指示器] [库存文本]`
+* **数量选择器:** `[-] [数量] [+]`
+* **添加到购物车:** `[按钮: 添加到购物车]`
+* **收藏/分享按钮:** `[收藏按钮] [分享按钮]`
 
-**Product Detail Page Template**
+## (V) 功能特性区域
 
-**(I) Breadcrumbs & Site Header**
+* **区域标题:** `<h2>功能特性</h2>`
+* **功能列表:**
+  * `[ ] [功能1名称] (可选: 可展开描述)`
+  * `[ ] [功能2名称] (可选: 可展开描述)`
+  * `...`
+* **社区功能建议:** `[链接: 建议并投票新功能]`
 
-*   **Breadcrumbs:** `[Site Section] > [Category Path] > [Product Name] > [Current View (e.g., About/Overview)]`
+## (VI) 标签区域
 
-**(II) Main Product Identification & Summary**
+* **区域标题:** `<h2>标签</h2>`
+* **标签列表:** `[标签1] [标签2] [标签3]...`
+* **上下文操作:** `[链接: 查找类似商品]`
 
-*   **Product Icon/Logo:** `[Image: Product Icon]`
-*   **Product Name:** `<h1>[Product Name]</h1>`
-*   **Engagement:** `[Like Button/Count] [User Avatars (Optional)]`
-*   **Tagline:** `<p>[Short Product Description/Tagline]</p>`
-*   **Media Gallery Preview:** `[Thumbnail 1] [Thumbnail 2] [Thumbnail 3] [+N More Thumbnails Link]`
+## (VII) 双栏布局
 
-**(III) Key Attributes Bar**
+* **左栏:**
+  * **区域标题:** `<h2>[商品名称] 新闻与活动</h2>`
+  * **最近新闻:**
+    * `(条件显示: 如有新闻)` `[新闻项目1]` `[新闻项目2]`
+    * `(条件显示: 无新闻)` `[消息: 暂无新闻。分享提示? 链接]`
+  * **最近活动:**
+    * `[图标] [活动描述1 (例如: 用户X评论了...)] [时间戳]`
+    * `[图标] [活动描述2 (例如: 用户Y添加了功能...)] [时间戳]`
+    * `...`
+    * `[链接: 显示所有活动]`
+* **右栏:**
+  * **商品描述:**
+    * `<h2>什么是[商品名称]?</h2>`
+    * `<p>[商品详细描述]</p>`
+  * **官方链接:**
+    * `<h3>官方链接</h3>`
+    * `[按钮: 官方网站]`
+  * **应用商店/下载:**
+    * `[应用商店按钮1 (例如: Google Play)]`
+    * `[应用商店按钮2 (例如: Apple App Store)]`
+    * `... (其他平台下载链接)`
+  * **社交网络:**
+    * `[社交图标1链接]` `[社交图标2链接]` `...`
 
-*   **Attribute Group 1 (e.g., Licensing):**
-    *   `Label: [Attribute Group 1 Name]`
-    *   `Tags: [Attribute Tag 1.1] [Attribute Tag 1.2]`
-*   **Attribute Group 2 (e.g., Type):**
-    *   `Label: [Attribute Group 2 Name]`
-    *   `Tags: [Attribute Tag 2.1] [Attribute Tag 2.2]`
-*   **Attribute Group 3 (e.g., Platforms):**
-    *   `Label: [Attribute Group 3 Name]`
-    *   `Tags: [Platform Tag 1] [Platform Tag 2]`
-*   **Primary Contextual CTA:** `[Button: e.g., Find [Product Name] Alternatives]`
+## (VIII) 详细信息区块
 
-**(IV) Engagement Metrics & Contribution Bar**
+* **区域标题:** `<h2>[商品名称] 信息</h2>`
+* **结构化数据 (键值对/列表):**
+  * `开发者:` `[开发者名称/链接]`
+  * `许可证:` `[许可证类型]`
+  * `平均评分:` `[评分值]`
+  * `替代品:` `[数量] 个替代品列出`
+  * `支持语言:` `[语言标签1] [语言标签2]`
+  * `[平台特定信息 (例如: App Store评分)]:` `[值/链接]`
+  * `[网站特定分类]:` `[分类链接1], [分类链接2]`
+  * `热门替代品:` `[替代品1链接] [替代品2链接] [替代品3链接] [查看全部链接]`
+  * `添加日期:` `[日期]`
+  * `最后更新:` `[日期]`
 
-*   **Metric 1:** `[Icon] [Value] [Label (e.g., Avg Rating)]`
-*   **Metric 2:** `[Icon] [Value] [Label (e.g., Likes)]`
-*   **Metric 3:** `[Icon] [Value] [Label (e.g., Comments)]`
-*   **Metric 4:** `[Icon] [Value] [Label (e.g., Alternatives Listed)]`
-*   **Metric 5:** `[Icon] [Value] [Label (e.g., News Articles)]`
-*   **Contribution CTA:** `[Button/Link: Contribute/Suggest Edits]`
+## (IX) 评论与评价区域
 
-**(V) Features Section**
-
-*   **Section Title:** `<h2>Features</h2>`
-*   **Feature List:**
-    *   `[ ] [Feature 1 Name] (Optional: Expandable Description)`
-    *   `[ ] [Feature 2 Name] (Optional: Expandable Description)`
-    *   `...`
-*   **Community Feature Suggestion:** `[Link: Suggest and vote on features]`
-
-**(VI) Tags Section**
-
-*   **Section Title:** `<h3>Tags</h3>` (Often implicit)
-*   **Tag List:** `[Tag 1] [Tag 2] [Tag 3] [Tag 4] ...`
-
-**(VII) Main Content Area (Two-Column Layout)**
-
-*   **Left Column:**
-    *   **Section Title:** `<h2>[Product Name] News & Activities</h2>`
-    *   **Recent News:**
-        *   `(Conditional: Display if news exists)` `[News Item 1]` `[News Item 2]`
-        *   `(Conditional: Display if no news)` `[Message: No news available. Share a tip? Link]`
-    *   **Recent Activities:**
-        *   `[Icon] [Activity Description 1 (e.g., User X reviewed...)] [Timestamp]`
-        *   `[Icon] [Activity Description 2 (e.g., User Y added feature...)] [Timestamp]`
-        *   `...`
-        *   `[Link: Show all activities]`
-*   **Right Column:**
-    *   **Product Description:**
-        *   `<h2>What is [Product Name]?</h2>`
-        *   `<p>[Detailed Product Description Text - potentially truncated with 'Show More' link]</p>`
-    *   **Official Links:**
-        *   `<h3>Official Links</h3>`
-        *   `[Button: Official Website]`
-        *   **App Stores / Downloads:**
-            *   `[App Store Button 1 (e.g., Google Play)]`
-            *   `[App Store Button 2 (e.g., Apple App Store)]`
-            *   `... (Other platform download links)`
-        *   **Social Networks:**
-            *   `[Social Icon 1 Link]` `[Social Icon 2 Link]` `...`
-
-**(VIII) Detailed Information Block**
-
-*   **Section Title:** `<h2>[Product Name] Information</h2>`
-*   **Structured Data (Key-Value Pairs / Lists):**
-    *   `Developed by:` `[Developer Name/Link]`
-    *   `Licensing:` `[License Type(s)]`
-    *   `Average Rating:` `[Rating Value]`
-    *   `Alternatives:` `[Number] alternatives listed`
-    *   `Supported Languages:` `[Language Tag 1] [Language Tag 2]`
-    *   `[Platform Specific Info (e.g., App Store Rating)]:` `[Value/Link]`
-    *   `[Site Specific Categories]:` `[Category Link 1], [Category Link 2]`
-    *   `Popular alternatives:` `[Link to Alt 1] [Link to Alt 2] [Link to Alt 3] [View all Link]`
-    *   `Date Added:` `[Date]`
-    *   `Last Updated:` `[Date]`
-
-**(IX) Comments and Reviews Section**
-
-*   **Section Title:** `<h2>Comments and Reviews</h2>`
-*   **Controls:** `[Filter Dropdown] [Sort Dropdown] [Post Comment/Review Button/Link]`
-*   **(Optional) Highlighted Comment:** `[e.g., Top Positive Comment Box]`
-    *   `[User Avatar] [User Name] [Rating Stars] [Date]`
-    *   `[Comment Text]`
-    *   `[Upvote/Downvote Buttons + Counts]`
-*   **Review List:**
-    *   **Review Item:**
-        *   `[User Avatar] [User Name] [Rating Stars] [Date]`
-        *   `[Review Text]`
-        *   `[Upvote/Downvote Buttons + Counts]`
-    *   `[Repeat for each review...]`
-    *   `(Pagination if many reviews)`
-
-
----
-
-This template captures the essential components and layout seen in the screenshot, providing a flexible structure for displaying detailed information about various products (apps, software, etc.) on a directory or comparison-style website.
-```
+* **区域标题:** `<h2>评论与评价</h2>`
+* **控制:** `[筛选下拉菜单] [排序下拉菜单] [发表评论/评价按钮/链接]`
+* **(可选) 突出显示评论:** `[例如: 顶部正面评论框]`
+  * `[用户头像] [用户名] [评分星级] [日期]`
+  * `[评论文本]`
+  * `[赞/踩按钮 + 计数]`
+* **评价列表:**
+  * **评价项目:**
+    * `[用户头像] [用户名] [评分星级] [日期]`
+    * `[评价文本]`
+    * `[赞/踩按钮 + 计数]`
+  * `[重复每个评价...]`
+  * `(如果评价很多则分页)`

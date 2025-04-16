@@ -5,6 +5,9 @@ import { sql } from "drizzle-orm";
 
 export async function init() {
   try {
+    // 每次初始化时先删除现有表，确保数据库结构最新
+    await db.run(sql`DROP TABLE IF EXISTS items;`);
+    
     // Initialize database tables
     await db.run(sql`
       CREATE TABLE IF NOT EXISTS users (
@@ -45,6 +48,46 @@ export async function init() {
         updatedAt DATETIME DEFAULT CURRENT_TIMESTAMP
       );
     `);
+    
+    await db.run(sql`
+      CREATE TABLE IF NOT EXISTS items (
+        id TEXT PRIMARY KEY,
+        name TEXT NOT NULL,
+        description TEXT,
+        price DECIMAL(10,2) NOT NULL,
+        quantity INTEGER NOT NULL DEFAULT 0,
+        image TEXT,
+        category TEXT,
+        type TEXT DEFAULT 'OTHER',
+        is_trending BOOLEAN DEFAULT FALSE,
+        is_popular BOOLEAN DEFAULT FALSE,
+        is_new BOOLEAN DEFAULT FALSE,
+        is_featured BOOLEAN DEFAULT FALSE,
+        is_best_seller BOOLEAN DEFAULT FALSE,
+        rating DECIMAL(2,1),
+        sales_count INTEGER DEFAULT 0,
+        view_count INTEGER DEFAULT 0,
+        original_price DECIMAL(10,2),
+        features TEXT,
+        specs TEXT,
+        platform TEXT,
+        version TEXT,
+        min_system_requirements TEXT,
+        game_genre TEXT,
+        multiplayer BOOLEAN,
+        game_mode TEXT,
+        page_count INTEGER,
+        format TEXT,
+        language TEXT,
+        duration INTEGER,
+        level TEXT,
+        certification BOOLEAN,
+        framework TEXT,
+        responsive BOOLEAN,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      );
+    `);
 
     // Seed initial data
     await seed();
@@ -54,4 +97,4 @@ export async function init() {
     console.error("Error initializing SQLite database:", error);
     throw error;
   }
-} 
+}

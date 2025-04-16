@@ -1,0 +1,263 @@
+{
+  "ProductCard": {
+    "noProductInfo": "No product info",
+    "unnamedProduct": "Unnamed Product",
+    "category": "Category",
+    "unknownCategory": "Unknown",
+    "price": "Price",
+    "unknown": "Unknown"
+  },
+  "Footer": {
+    "copyright": " 2025 Your Company. All rights reserved.",
+    "about": "About Us",
+    "contact": "Contact",
+    "github": "GitHub",
+    "newsletter": "Subscribe to our newsletter",
+    "subscribe": "Subscribe",
+    "social": "Follow us",
+    "wechat": "WeChat",
+    "weibo": "Weibo",
+    "twitter": "Twitter",
+    "telegram": "Telegram"
+  },
+  "Header": {
+    "siteTitle": "Website Title",
+    "welcome": "Welcome, {name}",
+    "notLoggedIn": "Not logged in",
+    "logo": "YourApp",
+    "ebooks": "Ebooks",
+    "products": "Products",
+    "about": "About Us",
+    "contact": "Contact",
+    "blog": "Blog",
+    "community": "Community"
+  },
+  "EbookCard": {
+    "noInfo": "No ebook info",
+    "noTitle": "Untitled",
+    "noCover": "No cover",
+    "noDescription": "No description",
+    "favorite": "Favorite",
+    "download": "Download"
+  },
+  "AppCard": {
+    "noAppInfo": "No app info",
+    "unnamedApp": "Unnamed App",
+    "category": "Category",
+    "unknown": "Unknown",
+    "favorite": "Favorite",
+    "download": "Download",
+    "noDescription": "No description",
+    "app": "App"
+  },
+  "GameCard": {
+    "noGameInfo": "No game info",
+    "unnamedGame": "Unnamed Game",
+    "category": "Category",
+    "unknown": "Unknown",
+    "favorite": "Favorite",
+    "download": "Download",
+    "noDescription": "No description",
+    "game": "Game"
+  },
+  "CourseCard": {
+    "noCourseInfo": "No course info",
+    "unnamedCourse": "Unnamed Course",
+    "category": "Category",
+    "unknown": "Unknown",
+    "favorite": "Favorite",
+    "download": "Download",
+    "noDescription": "No course description",
+    "course": "Course"
+  },
+  "OtherCard": {
+    "noInfo": "No info",
+    "unnamedItem": "Unnamed Item",
+    "category": "Category",
+    "unknown": "Unknown",
+    "favorite": "Favorite",
+    "download": "Download",
+    "noDescription": "No description",
+    "item": "Item"
+  },
+  "AddToCartButton": {
+    "addToCart": "Add to Cart"
+  },
+  "CommentsAndReviews": {
+    "loadFailed": "Failed to load comments",
+    "noComments": "No comments",
+    "commentsAndReviews": "Comments and Reviews",
+    "anonymousUser": "Anonymous",
+    "noContent": "No content"
+  },
+  "NotificationCenter": {
+    "loadFailed": "Failed to load notifications",
+    "noNotifications": "No notifications",
+    "notificationCenter": "Notification Center",
+    "noTitle": "No title",
+    "noContent": "No content"
+  },
+  "HomePage": {
+    "newCollectionAvailable": "New collection available!",
+    "yourOneStopShop": "Your one-stop shop for",
+    "everythingTech": "everything tech.",
+    "discoverPremiumProducts": "Discover premium products and deals, curated just for you.",
+    "shopNow": "Shop Now",
+    "viewShowcase": "View Showcase",
+    "freeShippingOver": "Free shipping on orders over $50",
+    "customerSupport": "24/7 customer support",
+    "shoppingExperience": "Shopping Experience",
+    "shopByCategory": "Shop by Category",
+    "findPerfectDevice": "Find the perfect device for your needs.",
+    "products": "products",
+    "featuredProducts": "Featured Products",
+    "whyChooseUs": "Why Choose Us",
+    "whatCustomersSay": "What Our Customers Say",
+    "title": "Home",
+    "categories": "Categories",
+    "features": "Features",
+    "testimonials": "Testimonials",
+    "seeAll": "See All",
+    "buyNow": "Buy Now",
+    "more": "More"
+  },
+  "ProductListPage": {
+    "title": "Product List",
+    "noProducts": "No products found",
+    "category": "Category",
+    "all": "All",
+    "searchPlaceholder": "Search products...",
+    "loading": "Loading...",
+    "error": "Failed to load, please try again later"
+  },
+  "EbookListPage": {
+    "title": "Ebook List",
+    "noEbooks": "No ebooks found",
+    "category": "Category",
+    "all": "All",
+    "searchPlaceholder": "Search ebooks...",
+    "loading": "Loading...",
+    "error": "Failed to load, please try again later"
+  },
+  "AppListPage": {
+    "title": "App List",
+    "noApps": "No apps found",
+    "category": "Category",
+    "all": "All",
+    "searchPlaceholder": "Search apps...",
+    "loading": "Loading...",
+    "error": "Failed to load, please try again later"
+  },
+  "CourseListPage": {
+    "title": "Course List",
+    "noCourses": "No courses found",
+    "category": "Category",
+    "all": "All",
+    "searchPlaceholder": "Search courses...",
+    "loading": "Loading...",
+    "error": "Failed to load, please try again later"
+  },
+  "ProductDetailPage": {
+    "title": "{name} - Product Detail",
+    "unknownName": "Unknown Product",
+    "noDescription": "No description available",
+    "price": "Price: {price}",
+    "tabs": {
+      "description": "Description",
+      "details": "Details",
+      "reviews": "Reviews"
+    },
+    "actions": {
+      "addToCart": "Add to Cart",
+      "buyNow": "Buy Now",
+      "addedToCart": "Added to cart"
+    },
+    "meta": {
+      "rating": "Rating: {rating}",
+      "sales": "Sales: {sales}",
+      "inStock": "In Stock",
+      "outOfStock": "Out of Stock"
+    },
+    "gallery": {
+      "imageAlt": "Image {index}",
+      "thumbnail": "View image {index}",
+      "prev": "Previous image",
+      "next": "Next image",
+      "fullscreen": "Fullscreen"
+    },
+    "noDetails": "No details",
+    "noReviews": "No reviews"
+  },
+  "EbookDetailPage": {
+    "title": "{name} - Ebook Detail",
+    "unknownName": "Unknown Ebook",
+    "unknownAuthor": "Unknown Author",
+    "noDescription": "No description available",
+    "author": "Author"
+  },
+  "AppDetailPage": {
+    "title": "App Detail - {name}",
+    "unknownName": "Unnamed App",
+    "unknownAuthor": "Unknown Author",
+    "noDescription": "No app description available"
+  },
+  "CourseDetailPage": {
+    "title": "{name} - Course Detail",
+    "unknownName": "Unknown Course",
+    "unknownTeacher": "Unknown Teacher",
+    "noDescription": "No description available",
+    "teacher": "Teacher",
+    "lessons": "Lessons: {count}",
+    "price": "Price: {price}",
+    "enroll": "Enroll Now",
+    "inProgress": "In Progress",
+    "completed": "Completed",
+    "notStarted": "Not Started"
+  },
+  "ProfilePage": {
+    "title": "Profile",
+    "greeting": "Hello, {name}",
+    "editProfile": "Edit Profile",
+    "logout": "Logout",
+    "orders": "My Orders",
+    "favorites": "My Favorites",
+    "settings": "Settings",
+    "noOrders": "No orders yet",
+    "noFavorites": "No favorites yet"
+  },
+  "DashboardPage": {
+    "title": "Dashboard",
+    "welcome": "Welcome back, {name}",
+    "stats": "Statistics",
+    "recentActivity": "Recent Activity",
+    "manageUsers": "Manage Users",
+    "manageContent": "Manage Content",
+    "systemSettings": "System Settings"
+  },
+  "Auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?",
+    "resetPassword": "Reset Password",
+    "sendCode": "Send Code",
+    "verifyCode": "Verification Code",
+    "rememberMe": "Remember Me",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "loginWith": "Login with"
+  },
+  "Common": {
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "success": "Success",
+    "error": "Error",
+    "loading": "Loading...",
+    "empty": "No data"
+  }
+}

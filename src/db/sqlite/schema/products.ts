@@ -1,8 +1,10 @@
 import { sqliteTable, text, integer, real } from "drizzle-orm/sqlite-core";
+import { createTimestampWithDefault } from "./utils";
 
 export const products = sqliteTable("products", {
   id: text("id").primaryKey(),
   name: text("name").notNull(),
+  slug: text("slug").notNull().unique(),
   price: real("price").notNull(),
   originalPrice: real("originalPrice"),
   image: text("image").notNull(),
@@ -12,10 +14,10 @@ export const products = sqliteTable("products", {
   description: text("description"),
   features: text("features"),
   specs: text("specs"),
-  createdAt: integer("createdAt").$defaultFn(() => Date.now()),
-  updatedAt: integer("updatedAt").$defaultFn(() => Date.now()),
+  createdAt: createTimestampWithDefault("createdAt"),
+  updatedAt: createTimestampWithDefault("updatedAt"),
 });
 
 // Types for the products table
 export type Product = typeof products.$inferSelect;
-export type NewProduct = typeof products.$inferInsert; 
+export type NewProduct = typeof products.$inferInsert;

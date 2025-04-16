@@ -1,0 +1,282 @@
+│   src
+│   │   ui                             # 新一代 UI 组件库根目录
+│   │   │   assets                         # 静态资源目录
+│   │   │   │   icons                      # 图标资源目录
+│   │   │   │   │   circle.png             # 圆形图标
+│   │   │   │   │   component.svg          # 组件相关 SVG 图标
+│   │   │   │   │   doc_icon2.png          # 文档图标 2
+│   │   │   │   │   doc_icon3.png          # 文档图标 3
+│   │   │   │   │   doc_icon4.png          # 文档图标 4
+│   │   │   │   │   doc_icon5.png          # 文档图标 5
+│   │   │   │   │   doc_star.png           # 文档星标图标
+│   │   │   │   │   home.svg               # 首页图标
+│   │   │   │   │   index.tsx              # 图标导出入口
+│   │   │   │   │   Rectangle.png          # 矩形图标
+│   │   │   │   │   triangle.png           # 三角形图标
+│   │   │   │   img                        # 图片资源目录
+│   │   │   │   │   astronate1.jpg         # 宇航员图片 1
+│   │   │   │   │   astronate2.jpg         # 宇航员图片 2
+│   │   │   │   │   astronate3.jpg         # 宇航员图片 3
+│   │   │   │   │   astronate4.jpg         # 宇航员图片 4
+│   │   │   │   │   bg.jpg                 # 背景图片
+│   │   │   │   index.ts                   # 静态资源导出入口
+│   │   │   │   preview                    # 组件预览图目录
+│   │   │   │   │   blob.png               # Blob 形状预览图
+│   │   │   │   │   buttons.svg            # 按钮组件预览图
+│   │   │   │   │   card.svg               # 卡片组件预览图
+│   │   │   │   │   carousel.svg           # 轮播组件预览图
+│   │   │   │   │   clip-path.svg          # 裁剪路径预览图
+│   │   │   │   │   coffee.svg             # 咖啡图标预览图
+│   │   │   │   │   drag-items.svg         # 拖拽项目预览图
+│   │   │   │   │   faqs.svg               # FAQ 预览图
+│   │   │   │   │   gallery.svg            # 图库预览图
+│   │   │   │   │   gallerynew.svg         # 新版图库预览图
+│   │   │   │   │   globe.svg              # 地球图标预览图
+│   │   │   │   │   grid.svg               # 网格布局预览图
+│   │   │   │   │   Group 5 (1).png        # 图标组合预览图
+│   │   │   │   │   hero-section.svg       # 英雄区块预览图
+│   │   │   │   │   horizontal-scrolling.svg # 水平滚动预览图
+│   │   │   │   │   image-reveal.svg       # 图片揭示预览图
+│   │   │   │   │   image_masking.svg      # 图片遮罩预览图
+│   │   │   │   │   image_mousetrail.svg   # 图片鼠标轨迹预览图
+│   │   │   │   │   index.tsx              # 预览图导出入口
+│   │   │   │   │   modal.svg              # 模态框预览图
+│   │   │   │   │   motion-number.svg      # 数字动效预览图
+│   │   │   │   │   mousetrail.svg         # 鼠标轨迹预览图
+│   │   │   │   │   password.svg           # 密码输入预览图
+│   │   │   │   │   responsive.svg         # 响应式布局预览图
+│   │   │   │   │   ripple.png             # 波纹效果预览图
+│   │   │   │   │   sparkles.svg           # 闪光效果预览图
+│   │   │   │   │   stacking card.svg      # 堆叠卡片预览图
+│   │   │   │   │   sticky.svg             # 粘性定位预览图
+│   │   │   │   │   tabs.svg               # 标签页预览图
+│   │   │   │   │   timeline.svg           # 时间线预览图
+│   │   │   │   │   youtube-tags.svg       # YouTube 标签预览图
+│   │   │   │   preview_bg.png             # 预览背景图片
+│   │   │   business                       # 业务相关复合组件目录
+│   │   │   │   .keep                      # 保持目录的空白文件
+│   │   │   │   add-to-cart-button         # 加入购物车按钮组件
+│   │   │   │   │   AddToCartButtonClient.tsx # 客户端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   app-card                   # 应用卡片组件
+│   │   │   │   │   AppCardClient.tsx      # 客户端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   app-detail-sections        # 应用详情区块组件
+│   │   │   │   │   AppDetailSectionsClient.tsx # 客户端实现
+│   │   │   │   │   AppDetailSectionsServer.tsx # 服务端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   app-list-page              # 应用列表页组件
+│   │   │   │   │   AppListPageClient.tsx  # 客户端实现
+│   │   │   │   │   AppListPageServer.tsx  # 服务端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   app-screenshots            # 应用截图组件
+│   │   │   │   │   AppScreenshots.tsx     # 截图展示组件
+│   │   │   │   cart                       # 购物车组件
+│   │   │   │   │   CartClient.tsx         # 客户端实现
+│   │   │   │   │   CartServer.tsx         # 服务端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   comments-and-reviews       # 评论与评价组件
+│   │   │   │   │   CommentsAndReviewsClient.tsx # 客户端实现
+│   │   │   │   │   CommentsAndReviewsServer.tsx # 服务端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   course-card                # 课程卡片组件
+│   │   │   │   │   CourseCardClient.tsx   # 客户端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   course-curriculum          # 课程大纲组件
+│   │   │   │   │   CourseCurriculum.tsx   # 课程大纲展示组件
+│   │   │   │   course-list-page           # 课程列表页组件
+│   │   │   │   │   CourseListPageClient.tsx # 客户端实现
+│   │   │   │   │   CourseListPageServer.tsx # 服务端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   ebook-card                 # 电子书卡片组件
+│   │   │   │   │   EbookCardClient.tsx    # 客户端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   ebook-list-page            # 电子书列表页组件
+│   │   │   │   │   EbookListPageClient.tsx # 客户端实现
+│   │   │   │   │   EbookListPageServer.tsx # 服务端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   featured-items             # 精选项目组件
+│   │   │   │   │   FeaturedItems.tsx      # 精选内容展示组件
+│   │   │   │   footer                     # 页脚组件
+│   │   │   │   │   FooterClient.tsx       # 客户端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   game-card                  # 游戏卡片组件
+│   │   │   │   │   GameCardClient.tsx     # 客户端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   game-list-page             # 游戏列表页组件
+│   │   │   │   │   GameListPageClient.tsx # 客户端实现
+│   │   │   │   │   GameListPageServer.tsx # 服务端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   header                     # 页头导航组件
+│   │   │   │   │   HeaderClient.tsx       # 客户端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   hero                       # 英雄区块组件
+│   │   │   │   │   Hero.tsx               # 英雄区块展示组件
+│   │   │   │   layouts                    # 布局组件目录
+│   │   │   │   │   auth-layout            # 认证页面布局
+│   │   │   │   │   │   AuthLayoutClient.tsx # 客户端实现
+│   │   │   │   │   │   index.ts           # 组件导出入口
+│   │   │   │   │   │   types.ts           # 类型定义
+│   │   │   │   │   dashboard-layout       # 控制台布局
+│   │   │   │   │   │   DashboardLayoutClient.tsx # 客户端实现
+│   │   │   │   │   │   index.ts           # 组件导出入口
+│   │   │   │   │   │   types.ts           # 类型定义
+│   │   │   │   product-card               # 产品卡片组件
+│   │   │   │   │   ProductCardClient.tsx  # 客户端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   product-list-page          # 产品列表页组件
+│   │   │   │   │   ProductListPageClient.tsx # 客户端实现
+│   │   │   │   │   ProductListPageServer.tsx # 服务端实现
+│   │   │   │   │   index.ts               # 组件导出入口
+│   │   │   │   │   types.ts               # 类型定义
+│   │   │   │   sidebar                    # 侧边栏组件
+│   │   │   │   │   Sidebar.tsx            # 侧边栏导航组件
+│   │   │   components                     # 组件原子库目录
+│   │   │   │   core                       # 核心基础组件
+│   │   │   │   │   accordion.tsx          # 折叠面板组件
+│   │   │   │   │   animated-beam.tsx      # 动画光束特效组件
+│   │   │   │   │   blocks.tsx             # 内容块布局组件
+│   │   │   │   │   blur-vignette.tsx      # 模糊渐变特效组件
+│   │   │   │   │   carousel.tsx           # 轮播图/内容滑块组件
+│   │   │   │   │   cursor-follow-text.tsx # 鼠标跟随文本动画组件
+│   │   │   │   │   dateTime-input.tsx     # 日期时间输入组件
+│   │   │   │   │   drawer                 # 抽屉式弹层组件目录
+│   │   │   │   │   │   vaul-header.tsx    # 抽屉头部组件
+│   │   │   │   │   │   vaul-main.tsx      # 抽屉主体组件
+│   │   │   │   │   │   vaul-sidebar.tsx   # 抽屉侧边栏组件
+│   │   │   │   │   file-upload.tsx        # 文件上传组件
+│   │   │   │   │   framer-timeline.tsx    # 时间线动画组件
+│   │   │   │   │   image-tabs.tsx         # 图片标签页切换组件
+│   │   │   │   │   liquid-gradient.tsx    # 液体渐变背景组件
+│   │   │   │   │   main-spotlight.tsx     # 聚光灯特效组件
+│   │   │   │   │   marquee.tsx            # 跑马灯文字组件
+│   │   │   │   │   modal                  # 通用弹窗组件目录
+│   │   │   │   │   │   dialog.tsx         # 对话框组件
+│   │   │   │   │   │   media-modal.tsx    # 媒体弹窗组件
+│   │   │   │   │   mousetrail.tsx         # 鼠标拖尾动画组件
+│   │   │   │   │   multi-selector.tsx     # 多项选择器组件
+│   │   │   │   │   numbersuffle.tsx       # 数字滚动动画组件
+│   │   │   │   │   phone-input.tsx        # 手机号输入组件
+│   │   │   │   │   progress-carousel.tsx  # 进度型轮播组件
+│   │   │   │   │   scroll-element.tsx     # 滚动元素组件
+│   │   │   │   │   scroll-text-marque.tsx # 滚动文字组件
+│   │   │   │   │   scroll-text.tsx        # 滚动文本组件
+│   │   │   │   │   slider.tsx             # 滑块输入组件
+│   │   │   │   │   spotlight.tsx          # 聚光灯聚焦特效组件
+│   │   │   │   │   tab.tsx                # 标签页切换组件
+│   │   │   │   │   tags-input.tsx         # 标签输入组件
+│   │   │   │   │   text-randomized.tsx    # 随机文本动画组件
+│   │   │   │   │   tooltip-doc.tsx        # 文档气泡提示组件
+│   │   │   │   labs                       # 实验性组件目录
+│   │   │   │   │   preview-tab.tsx        # 实验性预览标签页组件
+│   │   │   │   website                    # 站点页面相关复合组件
+│   │   │   │   │   constant.tsx           # 站点常量定义
+│   │   │   │   │   downloadallarray.tsx   # 批量下载功能组件
+│   │   │   │   │   dropdown-menu.tsx      # 下拉菜单组件
+│   │   │   │   │   footer.tsx             # 页脚组件
+│   │   │   │   │   header.tsx             # 顶部导航组件
+│   │   │   │   │   moibile-header.tsx     # 移动端头部导航组件
+│   │   │   │   │   searchbar.tsx          # 全局搜索对话框组件
+│   │   │   │   │   sidebar.tsx            # 侧边栏导航组件
+│   │   │   │   │   tableof-compoents.tsx  # 组件表格展示组件
+│   │   │   │   │   theme-provider.tsx     # 主题上下文组件
+│   │   │   │   │   theme-switch.tsx       # 主题切换按钮组件
+│   │   │   │   │   home                   # 首页专用复合组件目录
+│   │   │   │   │   │   hero.tsx           # 首页英雄区块组件
+│   │   │   │   │   │   footer.tsx         # 首页页脚组件
+│   │   │   │   │   code-components        # 代码块相关组件目录
+│   │   │   │   │   │   copy-button.tsx    # 复制按钮组件
+│   │   │   │   │   │   preview-component.tsx # 组件预览组件
+│   │   │   │   │   icons                  # 图标组件目录
+│   │   │   │   │   │   github.tsx         # GitHub 图标组件
+│   │   │   │   │   │   x.tsx              # X(Twitter) 图标组件
+│   │   │   │   │   labs                   # 实验区块组件目录
+│   │   │   │   │   │   sidebar.tsx        # 实验性侧边栏组件
+│   │   │   │   │   ui                     # UI 基础原子组件库
+│   │   │   │   │   │   button.tsx         # 按钮组件
+│   │   │   │   │   │   dialog.tsx         # 对话框组件
+│   │   │   │   │   │   drawer.tsx         # 抽屉组件
+│   │   │   │   │   │   dropdown.tsx       # 下拉菜单组件
+│   │   │   │   │   │   form.tsx           # 表单组件
+│   │   │   │   │   │   hover-card.tsx     # 悬停卡片组件
+│   │   │   │   │   │   input.tsx          # 输入框组件
+│   │   │   │   │   │   label.tsx          # 标签组件
+│   │   │   │   │   │   navigation-menu.tsx # 导航菜单组件
+│   │   │   │   │   │   popover.tsx        # 弹出框组件
+│   │   │   │   │   │   scroll-area.tsx    # 滚动区域组件
+│   │   │   │   │   │   slider.tsx         # 滑块组件
+│   │   │   │   │   │   tabs.tsx           # 标签页组件
+│   │   │   │   │   │   toast.tsx          # 提示消息组件
+│   │   │   README.md                      # 组件库说明文档
+│   │   │   registry                       # 组件注册/演示目录
+│   │   │   │   components                 # 演示组件目录
+│   │   │   │   │   accordion              # 折叠面板演示目录
+│   │   │   │   │   │   faq.tsx            # FAQ 问答风格手风琴演示
+│   │   │   │   │   │   gridlayout.tsx     # 网格布局手风琴演示
+│   │   │   │   │   │   image-hover.tsx    # 带图片悬浮动画的手风琴演示
+│   │   │   │   │   │   multilayout.tsx    # 多项可同时展开的手风琴演示
+│   │   │   │   │   │   singlelayout.tsx   # 单项展开/自定义图标手风琴演示
+│   │   │   │   │   │   tailwind-image-accordion.tsx # 基于 Tailwind 的图片手风琴特效演示
+│   │   │   │   │   animated-beam          # 动画光束演示目录
+│   │   │   │   │   │   index.tsx          # 动画光束演示组件
+│   │   │   │   │   bg-blocks              # 背景块演示目录
+│   │   │   │   │   │   index.tsx          # 背景块演示组件
+│   │   │   │   │   blurvignette           # 模糊渐变演示目录
+│   │   │   │   │   │   index.tsx          # 模糊渐变演示组件
+│   │   │   │   │   button                 # 按钮组件演示目录
+│   │   │   │   │   │   index.tsx          # 按钮组件演示
+│   │   │   │   │   card                   # 卡片组件演示目录
+│   │   │   │   │   │   index.tsx          # 卡片组件演示
+│   │   │   │   │   carousel               # 轮播组件演示目录
+│   │   │   │   │   │   index.tsx          # 轮播组件演示
+│   │   │   │   │   clip-path              # 裁剪路径演示目录
+│   │   │   │   │   │   index.tsx          # 裁剪路径演示组件
+│   │   │   │   │   drag                   # 拖拽组件演示目录
+│   │   │   │   │   │   index.tsx          # 拖拽组件演示
+│   │   │   │   │   drawer                 # 抽屉组件演示目录
+│   │   │   │   │   │   index.tsx          # 抽屉组件演示
+│   │   │   │   │   footers                # 页脚演示目录
+│   │   │   │   │   │   index.tsx          # 页脚演示组件
+│   │   │   │   │   form                   # 表单组件演示目录
+│   │   │   │   │   │   index.tsx          # 表单组件演示
+│   │   │   │   │   github-repo-btn        # GitHub 按钮演示目录
+│   │   │   │   │   │   index.tsx          # GitHub 按钮演示组件
+│   │   │   │   │   grid                   # 网格布局演示目录
+│   │   │   │   │   │   index.tsx          # 网格布局演示组件
+│   │   │   │   │   image-reveal           # 图片揭示动画演示目录
+│   │   │   │   │   │   index.tsx          # 图片揭示动画演示组件
+│   │   │   │   │   marquee                # 跑马灯演示目录
+│   │   │   │   │   │   index.tsx          # 跑马灯演示组件
+│   │   │   │   │   modal                  # 弹窗组件演示目录
+│   │   │   │   │   │   index.tsx          # 弹窗组件演示
+│   │   │   │   │   mousetrail             # 鼠标拖尾演示目录
+│   │   │   │   │   │   index.tsx          # 鼠标拖尾演示组件
+│   │   │   │   │   noise-effect           # 噪声特效演示目录
+│   │   │   │   │   │   index.tsx          # 噪声特效演示组件
+│   │   │   │   │   number-flow            # 数字流动画演示目录
+│   │   │   │   │   │   index.tsx          # 数字流动画演示组件
+│   │   │   │   │   scroll-animation       # 滚动动画演示目录
+│   │   │   │   │   │   index.tsx          # 滚动动画演示组件
+│   │   │   │   │   spotlight-cards        # 聚光卡片演示目录
+│   │   │   │   │   │   index.tsx          # 聚光卡片演示组件
+│   │   │   │   │   tabs                   # 标签页演示目录
+│   │   │   │   │   │   index.tsx          # 标签页演示组件
+│   │   │   │   │   text-animation         # 文本动画演示目录
+│   │   │   │   │   │   index.tsx          # 文本动画演示组件
+│   │   │   │   │   timeline-animation     # 时间线动画演示目录
+│   │   │   │   │   │   index.tsx          # 时间线动画演示组件

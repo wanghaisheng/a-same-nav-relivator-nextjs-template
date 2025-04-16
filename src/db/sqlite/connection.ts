@@ -15,15 +15,37 @@ export async function initializeDatabase() {
       CREATE TABLE IF NOT EXISTS items (
         id TEXT PRIMARY KEY,
         name TEXT NOT NULL,
-        price REAL NOT NULL,
-        original_price REAL,
-        image TEXT NOT NULL,
-        category TEXT NOT NULL,
-        rating REAL,
-        in_stock INTEGER DEFAULT 1,
         description TEXT,
+        price REAL NOT NULL,
+        quantity INTEGER NOT NULL DEFAULT 0,
+        image TEXT,
+        category TEXT,
+        type TEXT DEFAULT 'OTHER',
+        is_trending INTEGER DEFAULT 0,
+        is_popular INTEGER DEFAULT 0,
+        is_new INTEGER DEFAULT 0,
+        is_featured INTEGER DEFAULT 0,
+        is_best_seller INTEGER DEFAULT 0,
+        rating REAL,
+        sales_count INTEGER DEFAULT 0,
+        view_count INTEGER DEFAULT 0,
+        original_price REAL,
         features TEXT,
         specs TEXT,
+        platform TEXT,
+        version TEXT,
+        min_system_requirements TEXT,
+        game_genre TEXT,
+        multiplayer INTEGER,
+        game_mode TEXT,
+        page_count INTEGER,
+        format TEXT,
+        language TEXT,
+        duration INTEGER,
+        level TEXT,
+        certification INTEGER,
+        framework TEXT,
+        responsive INTEGER,
         created_at INTEGER DEFAULT (unixepoch()),
         updated_at INTEGER DEFAULT (unixepoch())
       );
@@ -63,4 +85,4 @@ export async function initializeDatabase() {
     console.error('Error initializing database:', error);
     throw error;
   }
-} 
+}

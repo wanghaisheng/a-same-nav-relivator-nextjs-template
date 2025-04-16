@@ -7,8 +7,8 @@ import * as dotenv from "dotenv";
 export default {
   schema:  "./src/db/postgres/schema/*",
   out: "./drizzle",
-  driver: "pg",
+  dialect: "postgresql",
   dbCredentials: {
-        connectionString: process.env.DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/relivator"
+        url: process.env.DATABASE_URL ?? "postgresql://postgres:postgres@localhost:5432/relivator"
       }
 } satisfies Config;

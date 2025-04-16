@@ -1,4 +1,5 @@
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { createTimestampWithDefault } from "./utils";
 
 export const testimonials = sqliteTable("testimonials", {
   id: text("id").primaryKey(),
@@ -7,6 +8,10 @@ export const testimonials = sqliteTable("testimonials", {
   authorRole: text("author_role").notNull(),
   authorAvatar: text("author_avatar"),
   rating: integer("rating").notNull().default(5),
-  createdAt: integer("created_at", { mode: "timestamp" }).notNull().default(new Date()),
-  updatedAt: integer("updated_at", { mode: "timestamp" }).notNull().default(new Date()),
-}); 
+  createdAt: createTimestampWithDefault("created_at"),
+  updatedAt: createTimestampWithDefault("updated_at"),
+});
+
+// Types for the testimonials table
+export type Testimonial = typeof testimonials.$inferSelect;
+export type NewTestimonial = typeof testimonials.$inferInsert;

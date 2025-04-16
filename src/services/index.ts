@@ -6,21 +6,32 @@
 
 // Import service implementations
 import * as sqliteServices from './services.sqlite';
-import * as postgresServices from './services.postgres';
-import {postgresAuthService} from './auth.postgres';
-import {sqliteAuthService} from './auth.sqlite';
+import { sqliteAuthService } from './auth.sqlite';
 
-// Determine which implementation to use based on environment
-const env = process.env.NEXT_PUBLIC_DATABASE_ENV || 'sqlite';
+// Import types from SQLite implementation
+import type { Item as SQLiteItem, Category as SQLiteCategory, Testimonial as SQLiteTestimonial, Feature as SQLiteFeature } from './services.sqlite';
+import type { ItemType, ItemTypeValue } from '~/db/sqlite/schema/items';
 
-// Export the appropriate service implementation
-const services = env === 'postgres' ? postgresServices : sqliteServices;
-const authServiceImpl = env === 'postgres' ? postgresAuthService : sqliteAuthService;
-
+// Only use sqlite implementation
+const services = sqliteServices;
+const authServiceImpl = sqliteAuthService;
 
 // Export individual services
 export const itemsService = services.itemsService;
+export const productsService = services.itemsService;
+
 export const categoriesService = services.categoriesService;
 export const testimonialsService = services.testimonialsService;
 export const featuresService = services.featuresService;
+export const coursesService = services.coursesService;
+export const appsService = services.appsService;
+export const gamesService = services.gamesService;
+export const ebooksService = services.ebooksService;
 export const authService = authServiceImpl;
+
+// Export database types based on environment using type aliases
+// This ensures that components always use types that match the current database implementation
+// type DbEnv = 'postgres' | 'sqlite'; // Optional: can be removed if not used elsewhere
+
+// Always export these types regardless of database environment
+// export { ItemType, ItemTypeValue };

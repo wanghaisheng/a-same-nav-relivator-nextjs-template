@@ -7,7 +7,8 @@ dotenv.config({ path: ".env.development" });
 export default {
   schema: "./src/db/sqlite/schema/*",
   out: "./drizzle",
-  driver: "better-sqlite",
+  dialect: "sqlite",
+  // driver: "better-sqlite3",
   dbCredentials: {
     url: "sqlite.db"
   }

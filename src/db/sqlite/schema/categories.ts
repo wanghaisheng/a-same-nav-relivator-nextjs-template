@@ -1,14 +1,14 @@
-import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
+import { sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import { createTimestampWithDefault } from './utils';
 
-export const categories = sqliteTable("categories", {
-  id: text("id").primaryKey(),
-  name: text("name").notNull(),
-  image: text("image").notNull(),
-  productCount: integer("productCount").default(0),
-  createdAt: integer("createdAt").$defaultFn(() => Date.now()),
-  updatedAt: integer("updatedAt").$defaultFn(() => Date.now()),
+export const categories = sqliteTable('categories', {
+  id: text('id').primaryKey(),
+  name: text('name').notNull(),
+  image: text('image'),
+  description: text('description'),
+  createdAt: createTimestampWithDefault('created_at'),
+  updatedAt: createTimestampWithDefault('updated_at'),
 });
 
-// Types for the categories table
 export type Category = typeof categories.$inferSelect;
-export type NewCategory = typeof categories.$inferInsert; 
+export type NewCategory = typeof categories.$inferInsert;

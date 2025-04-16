@@ -1,9 +1,6 @@
-import { items } from './items';
-import { categories } from './categories';
-import { products } from './products';
-import { users } from './users';
-import { testimonials } from './testimonials';
-import { features } from './features';
+import { products } from "./products";
+import { users } from "./users";
+import { testimonials } from "./testimonials";
 import {
   userTable,
   sessionTable,
@@ -13,12 +10,9 @@ import {
 } from './users';
 
 export {
-  items,
-  categories,
   products,
   users,
   testimonials,
-  features,
   userTable,
   sessionTable,
   accountTable,
