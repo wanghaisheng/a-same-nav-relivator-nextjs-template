@@ -1,10 +1,13 @@
 import { ebooksService, categoriesService } from "@/services";
-import type { EbookItem } from '@/db/types/ebook';
+import type { EbookItem } from '@/db/types';
 import type { Category } from '@/db/sqlite/schema/categories';
 import { EbookListPageServer } from '@/ui/business/ebook-list-page/EbookListPageServer';
 
 // 页面只负责数据获取和 notFound，不做 UI 渲染
-export default async function EbookListPage({ params: { locale } }: { params: { locale: string } }) {
+
+export default async function EbookListPage({ params }: { params: Promise<{  locale: string }> }) {
+    const {  locale } = await params;
+
   let ebooks: EbookItem[] = [];
   let categories: Category[] = [];
   try {

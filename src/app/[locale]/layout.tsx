@@ -1,8 +1,7 @@
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals-default.css";
-import "./globals-minimal.css";
+import "./globals.css";
 import "./globals-purple.css";
 import "./globals-bahause.css";
 import "./globals-dramatic.css";
@@ -10,7 +9,10 @@ import "./globals-Neumorphism.css";
 import "./globals-skeuomorphism.css";
 import { CartProvider } from "~/lib/hooks/use-cart";
 import { ThemeProvider } from "~/ui/components/website/theme-provider";
-import { NextIntlClientProvider } from "next-intl";
+import {notFound} from 'next/navigation';
+import {routing} from '@/i18n/routing';
+import {NextIntlClientProvider, hasLocale} from 'next-intl';
+
 import { getMessages } from "../i18n/request";
 
 const geistSans = Geist({
@@ -29,16 +31,20 @@ export const metadata: Metadata = {
 };
 
 function getThemeClass() {
-  return process.env.NEXT_PUBLIC_THEME_CSS?.replace('.css', '') || 'globals-default';
+  return process.env.NEXT_PUBLIC_THEME_CSS?.replace('.css', '') || 'globals';
 }
 
 export default async function LocaleLayout({
   children,
-  params: { locale }
+  params
 }: {
   children: React.ReactNode;
-  params: { locale: string };
+  params: Promise<{locale: string}>;
 }) {
+  const {locale} = await params;
+  if (!hasLocale(routing.locales, locale)) {
+    notFound();
+  }
   const { messages } = await getMessages(locale);
 
   const themeClass = getThemeClass();

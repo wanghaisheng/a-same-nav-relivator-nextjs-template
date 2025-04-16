@@ -133,11 +133,15 @@
   "EbookListPage": {
     "title": "Ebook List",
     "noEbooks": "No ebooks found",
-    "category": "Category",
+    "category": {
+      "filterPlaceholder": "Select categories...",
+      "unknown": "Unknown"
+    },
     "all": "All",
     "searchPlaceholder": "Search ebooks...",
     "loading": "Loading...",
-    "error": "Failed to load, please try again later"
+    "error": "Failed to load, please try again later",
+    "empty": "No ebooks found"
   },
   "AppListPage": {
     "title": "App List",
@@ -200,6 +204,12 @@
     "unknownName": "Unnamed App",
     "unknownAuthor": "Unknown Author",
     "noDescription": "No app description available"
+  },
+  "GameListPage": {
+    "title": "Game List",
+    "noGames": "No games found",
+    "loadFailed": "Loading failed",
+    "unnamedGame": "Unnamed Game"
   },
   "CourseDetailPage": {
     "title": "{name} - Course Detail",

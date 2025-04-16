@@ -1,5 +1,5 @@
 import React from "react";
-import type { EbookItem } from "@/db/types/ebook";
+import type { EbookItem } from "@/db/types";
 import type { Category } from "@/db/sqlite/schema/categories";
 import { EbookListPageClient } from '@/ui/business/ebook-list-page/EbookListPageClient';
 

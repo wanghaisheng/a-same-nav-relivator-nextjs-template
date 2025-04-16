@@ -9,23 +9,19 @@ import * as sqliteServices from './services.sqlite';
 import { sqliteAuthService } from './auth.sqlite';
 
 // Import types from SQLite implementation
-import type { Item as SQLiteItem, Category as SQLiteCategory, Testimonial as SQLiteTestimonial, Feature as SQLiteFeature } from './services.sqlite';
-import type { ItemType, ItemTypeValue } from '~/db/sqlite/schema/items';
 
 // Only use sqlite implementation
 const services = sqliteServices;
 const authServiceImpl = sqliteAuthService;
 
 // Export individual services
-export const itemsService = services.itemsService;
-export const productsService = services.itemsService;
+export const productsService = services.productsService;
 
 export const categoriesService = services.categoriesService;
 export const testimonialsService = services.testimonialsService;
-export const featuresService = services.featuresService;
-export const coursesService = services.coursesService;
-export const appsService = services.appsService;
-export const gamesService = services.gamesService;
+export const coursesService = services.courseItemsService;
+export const appsService = services.appItemsService;
+export const gamesService = services.gameItemsService;
 export const ebooksService = services.ebooksService;
 export const authService = authServiceImpl;
 

@@ -7,6 +7,17 @@
     "price": "价格",
     "unknown": "未知"
   },
+  "ProductListPage": {
+    "title": "产品列表",
+    "empty": "暂无产品数据",
+    "error": "加载失败：{message}",
+    "unknownError": "未知错误",
+    "product": {
+      "unnamed": "未命名产品",
+      "category": "分类",
+      "unknownCategory": "未知分类"
+    }
+  },
   "Footer": {
     "copyright": " 2025 . ",
     "about": " ",
@@ -156,6 +167,12 @@
     "title": "应用详情 - {name}",
     "unknownName": "未命名应用",
     "noDescription": "暂无应用描述"
+  },
+  "GameListPage": {
+    "title": "游戏列表",
+    "noGames": "暂无游戏数据",
+    "loadFailed": "加载失败",
+    "unnamedGame": "未命名游戏"
   },
   "CourseListPage": {
     "title": "课程列表",

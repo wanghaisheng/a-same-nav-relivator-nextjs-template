@@ -30,6 +30,14 @@
     }
   }
   ```
+- **注意事项（Next.js 15 及 next-intl 新规范）**：
+  - 在 page.tsx、layout.tsx 等页面和布局组件中获取 `params` 时，必须使用 Promise+await 的异步方式，避免同步解构导致的错误。
+  - 推荐写法：
+    ```tsx
+    // 正确做法
+    export default async function AppListPage({ params }: { params: Promise<{  locale: string }> }) {
+  const {  locale } = await params;
+```
 
 ## 3. 组件复用与防御式编程
 

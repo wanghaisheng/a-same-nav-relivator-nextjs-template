@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useMemo } from "react";
-import type { EbookItem } from '@/db/types/ebook';
+import type { EbookItem } from '@/db/types';
 import type { Category } from '@/db/sqlite/schema/categories';
 import { MultiSelect } from '@/ui/components/core/multi-selector';
 import { EbookCardClient } from '@/ui/business/ebook-card/EbookCardClient';

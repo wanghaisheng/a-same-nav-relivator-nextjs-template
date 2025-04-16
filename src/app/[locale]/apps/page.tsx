@@ -5,7 +5,9 @@ import { AppListPageServer } from '@/ui/business/app-list-page/AppListPageServer
 import { FooterClient } from "@/ui/business/footer/FooterClient";
 import { HeaderClient } from "@/ui/business/header/HeaderClient";
 
-export default async function AppsPage({ params: { locale } }: { params: { locale: string } }) {
+export default async function AppListPage({ params }: { params: Promise<{  locale: string }> }) {
+  const {  locale } = await params;
+
   let apps: AppItem[] = [];
   let categories: Category[] = [];
   try {

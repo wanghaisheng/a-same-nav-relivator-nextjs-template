@@ -24,6 +24,7 @@
       "@/configs/*": ["./src/ui/configs/*"],
       "@/hooks/*": ["./src/lib/hooks/*"],
       "@/assets/*": ["./src/ui/assets/*"],
+      "@/i18n/*": ["./src/app/i18n/*"],
 
       "@/components/*": ["./src/ui/components/*"],
       "@/registry/*": ["./src/ui/registry/*"]

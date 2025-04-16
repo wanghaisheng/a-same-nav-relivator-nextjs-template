@@ -1,7 +1,7 @@
 import { Card } from '@/ui/components/core/card';
 import { Badge } from '@/ui/components/core/badge';
 import { Button } from '@/ui/components/core/button';
-import type { EbookCardProps } from './types';
+import type { EbookCardProps } from './';
 import { useTranslations } from 'next-intl';
 
 export function EbookCard({ ebook, onFavorite, onDownload }: EbookCardProps) {

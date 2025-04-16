@@ -4,8 +4,9 @@ import { FooterClient } from "~/ui/business/footer/FooterClient";
 import { HeaderClient } from "~/ui/business/header/HeaderClient";
 import { CourseItem } from "~/db/sqlite/schema/course_items";
 import { Category } from "~/db/sqlite/schema/categories";
+export default async function CourseListPage({ params }: { params: Promise<{  locale: string }> }) {
+  const {  locale } = await params;
 
-export default async function CoursesPage({ params: { locale } }: { params: { locale: string } }) {
   let courses: CourseItem[] = [];
   let categories: Category[] = [];
   try {
