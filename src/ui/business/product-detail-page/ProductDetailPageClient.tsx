@@ -1,3 +1,4 @@
+'use client';
 import { ProductGallery } from '@/ui/registry/components/product-gallery/ProductGallery';
 import { ProductInfoSection } from '@/ui/registry/components/product-info-section/ProductInfoSection';
 import { ProductTabs } from '@/ui/registry/components/product-tabs/ProductTabs';

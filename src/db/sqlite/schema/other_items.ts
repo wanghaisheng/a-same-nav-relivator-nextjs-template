@@ -10,6 +10,7 @@ export const otherItems = sqliteTable("other_items", {
   image: text("image"),
   category: text("category"),
   slug: text("slug"),
+  locale: text('locale').notNull(), // 新增locale字段，支持多语言
   // 通用时间戳字段
   createdAt: createTimestampWithDefault("created_at"),
   updatedAt: createTimestampWithDefault("updated_at")

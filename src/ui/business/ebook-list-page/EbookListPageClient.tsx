@@ -10,10 +10,9 @@ import { useTranslations } from 'next-intl';
 export interface EbookListPageClientProps {
   ebooks: EbookItem[];
   categories: Category[];
-  locale: string;
 }
 
-export function EbookListPageClient({ ebooks, categories, locale }: EbookListPageClientProps) {
+export function EbookListPageClient({ ebooks, categories }: EbookListPageClientProps) {
   const t = useTranslations('EbookListPage');
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 

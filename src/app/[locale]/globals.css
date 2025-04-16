@@ -199,3 +199,18 @@
   .card { @apply bg-card text-card-foreground rounded-xl p-6 shadow-raised; } /* Use raised shadow */
   .input { @apply bg-input border-none rounded-lg px-4 py-2.5 shadow-pressed focus:shadow-pressed; } /* Use pressed shadow */
 }
+
+/* globals.css 中补充 */
+.game-list-section .grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (min-width: 640px) {
+  .game-list-section .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .game-list-section .grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}

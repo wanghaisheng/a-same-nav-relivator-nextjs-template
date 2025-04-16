@@ -10,6 +10,7 @@ export const websiteItems = sqliteTable("website_items", {
   image: text("image"),
   category: text("category"),
   slug: text("slug"),
+  locale: text('locale').notNull(), // 新增locale字段，支持多语言
   // WEBSITE特有字段
   framework: text("framework"),             // 使用的框架 (如: "React, Vue, Angular")
   responsive: integer("responsive", { mode: "boolean" }), // 是否响应式

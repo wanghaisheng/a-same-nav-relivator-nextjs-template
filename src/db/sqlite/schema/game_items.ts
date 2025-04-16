@@ -10,6 +10,8 @@ export const gameItems = sqliteTable("game_items", {
   image: text("image"),
   category: text("category"),
   slug: text("slug"),
+  locale: text('locale').notNull(), // 新增locale字段，支持多语言
+  tags: text("tags"), // 新增tags标签字段，支持逗号分隔的字符串
   // GAME特有字段
   gameGenre: text("game_genre"),            // 游戏类别
   multiplayer: integer("multiplayer", { mode: "boolean" }), // 是否支持多人

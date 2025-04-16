@@ -13,5 +13,5 @@ export async function EbookDetailPageServer({ ebook, locale }: EbookDetailPageSe
     // description/name/author 字段的兜底交给客户端用 t 处理
   };
 
-  return <EbookDetailPageClient ebook={normalizedEbook} locale={locale} />;
+  return <EbookDetailPageClient ebook={normalizedEbook} />;
 }

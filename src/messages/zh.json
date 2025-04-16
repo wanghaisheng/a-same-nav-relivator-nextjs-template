@@ -8,15 +8,26 @@
     "unknown": "未知"
   },
   "ProductListPage": {
-    "title": "产品列表",
-    "empty": "暂无产品数据",
+    "title": "商品列表",
+    "empty": "暂无商品",
     "error": "加载失败：{message}",
     "unknownError": "未知错误",
     "product": {
-      "unnamed": "未命名产品",
+      "unnamed": "未命名商品",
       "category": "分类",
       "unknownCategory": "未知分类"
-    }
+    },
+    "subtitle": "浏览我们的商品",
+    "category": {
+      "All": "全部"
+    },
+    "pagination": {
+      "prev": "上一页",
+      "next": "下一页"
+    },
+    "addedToCart": "已将 {name} 加入购物车",
+    "addedToWishlist": "已将 {name} 加入心愿单",
+    "noProductsInCategory": "该分类下暂无商品"
   },
   "Footer": {
     "copyright": " 2025 . ",
@@ -29,7 +40,18 @@
     "wechat": " ",
     "weibo": " ",
     "twitter": " ",
-    "telegram": " "
+    "telegram": " ",
+    "copyright": "2025 版权所有",
+    "about": "关于我们",
+    "contact": "联系我们",
+    "github": "GitHub",
+    "newsletter": "订阅我们的新闻",
+    "subscribe": "订阅",
+    "social": "关注我们",
+    "wechat": "微信",
+    "weibo": "微博",
+    "twitter": "推特",
+    "telegram": "电报"
   },
   "Header": {
     "siteTitle": " ",
@@ -38,10 +60,22 @@
     "logo": " ",
     "ebooks": " ",
     "products": " ",
+    "games": " ",
     "about": " ",
     "contact": " ",
     "blog": " ",
-    "community": " "
+    "community": " ",
+    "siteTitle": "网站标题",
+    "welcome": "欢迎, {name}",
+    "notLoggedIn": "未登录",
+    "logo": "YourApp",
+    "ebooks": "电子书",
+    "products": "商品",
+    "games": "游戏",
+    "about": "关于我们",
+    "contact": "联系我们",
+    "blog": "博客",
+    "community": "社区"
   },
   "EbookCard": {
     "noInfo": " ",
@@ -49,7 +83,13 @@
     "noCover": " ",
     "noDescription": " ",
     "favorite": " ",
-    "download": " "
+    "download": " ",
+    "noInfo": "暂无信息",
+    "noTitle": "未命名",
+    "noCover": "无封面",
+    "noDescription": "暂无描述",
+    "favorite": "收藏",
+    "download": "下载"
   },
   "AppCard": {
     "noAppInfo": " ",
@@ -62,14 +102,14 @@
     "app": " "
   },
   "GameCard": {
-    "noGameInfo": " ",
-    "unnamedGame": " ",
-    "category": " ",
-    "unknown": " ",
-    "favorite": " ",
-    "download": " ",
-    "noDescription": " ",
-    "game": " "
+    "noGameInfo": "无游戏信息",
+    "unnamedGame": "未命名游戏",
+    "category": "分类",
+    "unknown": "未知",
+    "favorite": "收藏",
+    "download": "下载",
+    "noDescription": "暂无描述",
+    "game": "游戏"
   },
   "CourseCard": {
     "noCourseInfo": "无课程信息",
@@ -131,7 +171,12 @@
     "testimonials": "用户评价",
     "seeAll": "查看全部",
     "buyNow": "立即购买",
-    "more": "更多"
+    "more": "更多",
+    "title": "首页",
+    "subtitle": "欢迎来到我们的网站",
+    "features": "特色功能",
+    "categories": "分类",
+    "testimonials": "用户评价"
   },
   "EbookListPage": {
     "title": "电子书列表",
@@ -140,7 +185,13 @@
     "all": "全部",
     "searchPlaceholder": "搜索电子书...",
     "loading": "加载中...",
-    "error": "加载失败，请稍后重试"
+    "error": "加载失败，请稍后重试",
+    "empty": "暂无电子书",
+    "error": "加载失败: {message}",
+    "card": {
+      "label": "电子书",
+      "button": "详情"
+    }
   },
   "EbookDetailPage": {
     "title": "电子书详情 - {name}",
@@ -152,7 +203,11 @@
     "unknownName": "未知电子书",
     "unknownAuthor": "未知作者",
     "noDescription": "暂无描述",
-    "author": "作者"
+    "author": "作者",
+    "unknownTitle": "未命名电子书",
+    "noDescription": "暂无描述",
+    "download": "下载",
+    "favorite": "收藏"
   },
   "AppListPage": {
     "title": "应用列表",
@@ -170,9 +225,20 @@
   },
   "GameListPage": {
     "title": "游戏列表",
-    "noGames": "暂无游戏数据",
-    "loadFailed": "加载失败",
-    "unnamedGame": "未命名游戏"
+    "description": "浏览和发现精选游戏",
+    "featured": "精选游戏",
+    "popular": "热门游戏",
+    "recent": "最近更新",
+    "all": "全部游戏",
+    "empty": "暂无游戏数据",
+    "viewAll": "查看全部",
+    "title": "游戏列表",
+    "noGames": "暂无游戏",
+    "loadFailed": "加载游戏失败",
+    "viewAll": "查看全部"
+  },
+  "GameSection": {
+    "viewAll": "查看全部"
   },
   "CourseListPage": {
     "title": "课程列表",
@@ -238,7 +304,34 @@
       "fullscreen": "全屏查看"
     },
     "noDetails": "暂无详情",
-    "noReviews": "暂无评价"
+    "noReviews": "暂无评价",
+    "unknownName": "未知商品",
+    "noDescription": "暂无描述",
+    "price": "价格: {price}",
+    "outOfStock": "缺货",
+    "addToCart": "加入购物车",
+    "addToWishlist": "加入心愿单",
+    "off": "折扣",
+    "meta": {
+      "rating": "评分: {rating}",
+      "sales": "销量: {sales}",
+      "inStock": "有货",
+      "outOfStock": "缺货"
+    },
+    "tabs": {
+      "description": "商品描述",
+      "details": "详细信息",
+      "reviews": "用户评价"
+    },
+    "noDetails": "暂无详情",
+    "noReviews": "暂无评价",
+    "gallery": {
+      "imageAlt": "图片 {index}",
+      "thumbnail": "缩略图 {index}",
+      "prev": "上一张图片",
+      "next": "下一张图片",
+      "fullscreen": "全屏"
+    }
   },
   "ProductListPage": {
     "title": "产品列表",
@@ -285,7 +378,37 @@
     "linkNewAccount": "绑定新账号：",
     "failedLinkAccount": "绑定账号失败，请重试。",
     "linkGithub": "绑定 GitHub",
-    "linkGoogle": "绑定 Google"
+    "linkGoogle": "绑定 Google",
+    "title": "个人中心",
+    "noUser": "暂无用户信息",
+    "loading": "加载中...",
+    "empty": "暂无数据",
+    "scanQrCode": "请扫描二维码",
+    "failedEnableTwoFactor": "启用两步验证失败",
+    "twoFactorDisabled": "已关闭两步验证",
+    "failedDisableTwoFactor": "关闭两步验证失败",
+    "backToDashboard": "返回控制台",
+    "twoFactorAuth": "两步验证",
+    "qrCodeAlt": "二维码",
+    "scanQrCodeHint": "请用验证器App扫描二维码",
+    "manualEntryCode": "手动输入代码",
+    "yourPassword": "你的密码",
+    "enterPassword": "请输入密码",
+    "passwordRequired": "密码必填",
+    "processing": "处理中...",
+    "enableTwoFactor": "启用两步验证",
+    "disableTwoFactor": "关闭两步验证",
+    "viewBackupCodes": "查看备份码",
+    "linkedAccounts": "已绑定账号",
+    "linkAccountHint": "绑定社交账号以便快捷登录",
+    "yourLinkedAccounts": "你已绑定的账号",
+    "unlink": "解绑",
+    "noLinkedAccounts": "暂无绑定账号",
+    "linkNewAccount": "绑定新账号",
+    "linkGithub": "绑定 GitHub",
+    "linkGoogle": "绑定 Google",
+    "failedLinkAccount": "绑定账号失败",
+    "failedUnlinkAccount": "解绑账号失败"
   },
   "Auth": {
     "signIn": "登录",
@@ -330,7 +453,16 @@
     "useVerificationCode": "使用验证码验证",
     "trustDevice": "信任此设备",
     "trustDeviceDesc": "30天内无需再次输入验证码",
-    "error": "发生错误，请重试。"
+    "error": "发生错误，请重试。",
+    "signIn": "登录",
+    "signInDesc": "请输入邮箱和密码进行登录",
+    "signInError": "邮箱或密码错误",
+    "signUp": "注册",
+    "loginWith": "第三方登录",
+    "noAccount": "没有账号？",
+    "passwordPlaceholder": "密码",
+    "confirm": "确认",
+    "loading": "加载中..."
   },
   "DashboardPage": {
     "title": "控制台",
@@ -346,6 +478,11 @@
     "enabled": "已启用",
     "disabled": "未启用",
     "editProfile": "编辑资料",
+    "logout": "退出登录",
+    "quickActions": "快捷操作",
+    "commonActions": "常用操作",
+    "title": "控制台",
+    "editProfile": "编辑个人资料",
     "logout": "退出登录",
     "quickActions": "快捷操作",
     "commonActions": "常用操作"
@@ -373,6 +510,35 @@
     "success": "操作成功",
     "error": "操作失败",
     "loading": "加载中...",
-    "empty": "暂无数据"
+    "empty": "暂无数据",
+    "empty": "暂无数据",
+    "processing": "处理中..."
+  },
+  "GameSection": {
+    "viewAll": "查看全部"
+  },
+  "GameDetail": {
+    "game": "游戏",
+    "unnamedGame": "未命名游戏",
+    "unknownCategory": "未知分类",
+    "noDescription": "暂无描述",
+    "playNow": "立即游玩",
+    "versionsTitle": "游戏版本",
+    "recommendationsTitle": "相关推荐",
+    "charactersTitle": "全部角色",
+    "downloadTitle": "下载方式",
+    "downloadLink": "下载",
+    "videosTitle": "精选视频",
+    "game": "游戏",
+    "unnamedGame": "未命名游戏",
+    "unknownCategory": "未知分类",
+    "noDescription": "暂无描述",
+    "playNow": "立即游玩",
+    "versionsTitle": "游戏版本",
+    "recommendationsTitle": "相关推荐",
+    "charactersTitle": "全部角色",
+    "downloadTitle": "下载方式",
+    "downloadLink": "下载",
+    "videosTitle": "精选视频"
   }
 }

@@ -11,8 +11,8 @@ export interface FooterNavItem {
   external?: boolean;
 }
 
-export const FooterClient: React.FC<FooterProps> = ({ copyright }) => {
-  const t = useTranslations('Footer');
+export const FooterClient: React.FC<FooterProps & { locale?: string }> = ({ copyright, locale }) => {
+  const t = useTranslations('Footer', { locale });
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
 

@@ -12,8 +12,8 @@ import { ThemeProvider } from "~/ui/components/website/theme-provider";
 import {notFound} from 'next/navigation';
 import {routing} from '@/i18n/routing';
 import {NextIntlClientProvider, hasLocale} from 'next-intl';
-
 import { getMessages } from "../i18n/request";
+import { ThemeClassProvider } from "~/ui/components/website/theme-class-provider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -30,10 +30,6 @@ export const metadata: Metadata = {
   description: "Relivator Next.js Template",
 };
 
-function getThemeClass() {
-  return process.env.NEXT_PUBLIC_THEME_CSS?.replace('.css', '') || 'globals';
-}
-
 export default async function LocaleLayout({
   children,
   params
@@ -46,10 +42,8 @@ export default async function LocaleLayout({
     notFound();
   }
   const { messages } = await getMessages(locale);
-
-  const themeClass = getThemeClass();
   return (
-    <html lang={locale} className={themeClass} suppressHydrationWarning>
+    <ThemeClassProvider lang={locale}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
@@ -67,6 +61,6 @@ export default async function LocaleLayout({
         </NextIntlClientProvider>
         <SpeedInsights />
       </body>
-    </html>
+    </ThemeClassProvider>
   );
 }

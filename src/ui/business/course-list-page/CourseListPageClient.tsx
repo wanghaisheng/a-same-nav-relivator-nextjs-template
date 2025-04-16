@@ -1,15 +1,17 @@
-'use client';
+"use client";
 import React, { useMemo, useState } from "react";
 import type { CourseItem } from '@/db/sqlite/schema/course_items';
 import type { Category } from '@/db/sqlite/schema/categories';
+import { useTranslations } from 'next-intl';
 
 export interface CourseListPageClientProps {
   courses: CourseItem[];
   categories: Category[];
-  t: any; // next-intl translations instance
+  locale: string;
 }
 
-export function CourseListPageClient({ courses, categories, t }: CourseListPageClientProps) {
+export function CourseListPageClient({ courses, categories, locale }: CourseListPageClientProps) {
+  const t = useTranslations('CourseListPage');
   const [selectedCategory, setSelectedCategory] = useState<string>('');
 
   const categoryOptions = useMemo(() =>

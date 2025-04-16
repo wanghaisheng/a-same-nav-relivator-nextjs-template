@@ -1,24 +1,75 @@
-import React from 'react';
-import type { ReactNode } from 'react';
+import type * as React from "react";
 
-// 基础 Card 组件，支持样式扩展和防御式编程
-export interface CardProps {
-  children?: ReactNode;
-  className?: string;
-  // 允许传递其他属性
-  [key: string]: any;
-}
+import { cn } from "~/lib/utils";
 
-/**
- * Card 基础组件
- * @description 最小粒度的卡片容器，支持自定义样式和内容
- */
-export function Card({ children, className = '', ...rest }: CardProps) {
+function Card({ className, ...props }: React.ComponentProps<"div">) {
   return (
-    <div className={`ui-card ${className}`.trim()} {...rest}>
-      {children}
-    </div>
+    <div
+      data-slot="card"
+      className={cn(
+        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
+        className,
+      )}
+      {...props}
+    />
   );
 }
 
-// 默认样式请在 src/app/globals.css 中维护
+function CardHeader({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-header"
+      className={cn("flex flex-col gap-1.5 px-6", className)}
+      {...props}
+    />
+  );
+}
+
+function CardTitle({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-title"
+      className={cn("leading-none font-semibold", className)}
+      {...props}
+    />
+  );
+}
+
+function CardDescription({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-description"
+      className={cn("text-muted-foreground text-sm", className)}
+      {...props}
+    />
+  );
+}
+
+function CardContent({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-content"
+      className={cn("px-6", className)}
+      {...props}
+    />
+  );
+}
+
+function CardFooter({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="card-footer"
+      className={cn("flex items-center px-6", className)}
+      {...props}
+    />
+  );
+}
+
+export {
+  Card,
+  CardHeader,
+  CardFooter,
+  CardTitle,
+  CardDescription,
+  CardContent,
+};

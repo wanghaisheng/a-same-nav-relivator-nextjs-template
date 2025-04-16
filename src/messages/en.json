@@ -8,7 +8,7 @@
     "unknown": "Unknown"
   },
   "Footer": {
-    "copyright": " 2025 Your Company. All rights reserved.",
+    "copyright": "2025 Your Company. All rights reserved.",
     "about": "About Us",
     "contact": "Contact",
     "github": "GitHub",
@@ -119,7 +119,11 @@
     "testimonials": "Testimonials",
     "seeAll": "See All",
     "buyNow": "Buy Now",
-    "more": "More"
+    "more": "More",
+    "subtitle": "Welcome to our site",
+    "features": "Features",
+    "categories": "Categories",
+    "testimonials": "Testimonials"
   },
   "ProductListPage": {
     "title": "Product List",
@@ -128,7 +132,20 @@
     "all": "All",
     "searchPlaceholder": "Search products...",
     "loading": "Loading...",
-    "error": "Failed to load, please try again later"
+    "error": "Failed to load, please try again later",
+    "empty": "No products found",
+    "error": "Failed to load: {message}",
+    "subtitle": "Browse our products",
+    "category": {
+      "All": "All"
+    },
+    "pagination": {
+      "prev": "Previous",
+      "next": "Next"
+    },
+    "addedToCart": "Added {name} to cart",
+    "addedToWishlist": "Added {name} to wishlist",
+    "noProductsInCategory": "No products in this category"
   },
   "EbookListPage": {
     "title": "Ebook List",
@@ -141,7 +158,13 @@
     "searchPlaceholder": "Search ebooks...",
     "loading": "Loading...",
     "error": "Failed to load, please try again later",
-    "empty": "No ebooks found"
+    "empty": "No ebooks found",
+    "empty": "No ebooks found",
+    "error": "Failed to load: {message}",
+    "card": {
+      "label": "Ebook",
+      "button": "Details"
+    }
   },
   "AppListPage": {
     "title": "App List",
@@ -190,14 +213,45 @@
       "fullscreen": "Fullscreen"
     },
     "noDetails": "No details",
-    "noReviews": "No reviews"
+    "noReviews": "No reviews",
+    "unknownName": "Unknown Product",
+    "noDescription": "No description available",
+    "price": "Price: {price}",
+    "outOfStock": "Out of stock",
+    "addToCart": "Add to cart",
+    "addToWishlist": "Add to wishlist",
+    "off": "off",
+    "meta": {
+      "rating": "Rating: {rating}",
+      "sales": "Sales: {sales}",
+      "inStock": "In stock",
+      "outOfStock": "Out of stock"
+    },
+    "tabs": {
+      "description": "Description",
+      "details": "Details",
+      "reviews": "Reviews"
+    },
+    "noDetails": "No details",
+    "noReviews": "No reviews",
+    "gallery": {
+      "imageAlt": "Image {index}",
+      "thumbnail": "Thumbnail {index}",
+      "prev": "Previous image",
+      "next": "Next image",
+      "fullscreen": "Fullscreen"
+    }
   },
   "EbookDetailPage": {
     "title": "{name} - Ebook Detail",
     "unknownName": "Unknown Ebook",
     "unknownAuthor": "Unknown Author",
     "noDescription": "No description available",
-    "author": "Author"
+    "author": "Author",
+    "unknownTitle": "Untitled Ebook",
+    "noDescription": "No description available",
+    "download": "Download",
+    "favorite": "Favorite"
   },
   "AppDetailPage": {
     "title": "App Detail - {name}",
@@ -206,10 +260,48 @@
     "noDescription": "No app description available"
   },
   "GameListPage": {
-    "title": "Game List",
+    "title": "Games",
+    "description": "Browse and discover featured games",
+    "featured": "Featured Games",
+    "popular": "Popular Games",
+    "recent": "Recently Updated",
+    "all": "All Games",
+    "empty": "No games found.",
+    "viewAll": "View All",
     "noGames": "No games found",
     "loadFailed": "Loading failed",
-    "unnamedGame": "Unnamed Game"
+    "unnamedGame": "Unnamed Game",
+    "title": "Game List",
+    "noGames": "No games found",
+    "loadFailed": "Failed to load games",
+    "viewAll": "View All"
+  },
+  "GameSection": {
+    "viewAll": "View All"
+  },
+  "GameDetail": {
+    "game": "Game",
+    "unnamedGame": "Unnamed Game",
+    "unknownCategory": "Unknown Category",
+    "noDescription": "No description",
+    "playNow": "Play Now",
+    "versionsTitle": "Game Versions",
+    "recommendationsTitle": "Game Recommendations",
+    "charactersTitle": "All Characters",
+    "downloadTitle": "How to Download",
+    "downloadLink": "Download",
+    "videosTitle": "Featured Videos",
+    "game": "Game",
+    "unnamedGame": "Unnamed Game",
+    "unknownCategory": "Unknown Category",
+    "noDescription": "No description",
+    "playNow": "Play Now",
+    "versionsTitle": "Game Versions",
+    "recommendationsTitle": "Game Recommendations",
+    "charactersTitle": "All Characters",
+    "downloadTitle": "How to Download",
+    "downloadLink": "Download",
+    "videosTitle": "Featured Videos"
   },
   "CourseDetailPage": {
     "title": "{name} - Course Detail",
@@ -233,7 +325,47 @@
     "favorites": "My Favorites",
     "settings": "Settings",
     "noOrders": "No orders yet",
-    "noFavorites": "No favorites yet"
+    "noFavorites": "No favorites yet",
+    "noUser": "No user information",
+    "loading": "Loading...",
+    "empty": "No data",
+    "scanQrCode": "Scan this QR code",
+    "failedEnableTwoFactor": "Failed to enable two-factor authentication",
+    "twoFactorDisabled": "Two-factor authentication disabled",
+    "failedDisableTwoFactor": "Failed to disable two-factor authentication",
+    "backToDashboard": "Back to Dashboard",
+    "twoFactorAuth": "Two-Factor Authentication",
+    "qrCodeAlt": "QR Code",
+    "scanQrCodeHint": "Scan this code with your authenticator app",
+    "manualEntryCode": "Manual entry code",
+    "yourPassword": "Your password",
+    "enterPassword": "Enter your password",
+    "passwordRequired": "Password required",
+    "processing": "Processing...",
+    "enableTwoFactor": "Enable Two-Factor",
+    "disableTwoFactor": "Disable Two-Factor",
+    "viewBackupCodes": "View backup codes",
+    "linkedAccounts": "Linked Accounts",
+    "linkAccountHint": "Link your social accounts for easy login",
+    "yourLinkedAccounts": "Your linked accounts",
+    "unlink": "Unlink",
+    "noLinkedAccounts": "No linked accounts",
+    "linkNewAccount": "Link new account",
+    "linkGithub": "Link GitHub",
+    "linkGoogle": "Link Google",
+    "failedLinkAccount": "Failed to link account",
+    "failedUnlinkAccount": "Failed to unlink account"
+  },
+  "Auth": {
+    "signIn": "Sign In",
+    "signInDesc": "Please enter your email and password to sign in",
+    "signInError": "Incorrect email or password",
+    "signUp": "Sign Up",
+    "loginWith": "Login with",
+    "noAccount": "No account?",
+    "passwordPlaceholder": "Password",
+    "confirm": "Confirm",
+    "loading": "Loading..."
   },
   "DashboardPage": {
     "title": "Dashboard",
@@ -242,22 +374,11 @@
     "recentActivity": "Recent Activity",
     "manageUsers": "Manage Users",
     "manageContent": "Manage Content",
-    "systemSettings": "System Settings"
-  },
-  "Auth": {
-    "signIn": "Sign In",
-    "signUp": "Sign Up",
-    "signOut": "Sign Out",
-    "email": "Email",
-    "password": "Password",
-    "forgotPassword": "Forgot Password?",
-    "resetPassword": "Reset Password",
-    "sendCode": "Send Code",
-    "verifyCode": "Verification Code",
-    "rememberMe": "Remember Me",
-    "noAccount": "Don't have an account?",
-    "haveAccount": "Already have an account?",
-    "loginWith": "Login with"
+    "systemSettings": "System Settings",
+    "editProfile": "Edit Profile",
+    "logout": "Logout",
+    "quickActions": "Quick Actions",
+    "commonActions": "Common Actions"
   },
   "Common": {
     "confirm": "Confirm",
@@ -268,6 +389,8 @@
     "success": "Success",
     "error": "Error",
     "loading": "Loading...",
-    "empty": "No data"
+    "empty": "No data",
+    "empty": "No data",
+    "processing": "Processing..."
   }
 }

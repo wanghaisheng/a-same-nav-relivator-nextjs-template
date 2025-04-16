@@ -33,8 +33,12 @@ export const ebooksService = {
     return ebooksService.getById(newItem.id);
   },
 
-  // 获取所有电子书
-  getAll: async (): Promise<EbookItem[]> => {
+  // 获取所有电子书，支持 locale 过滤
+  getAll: async (locale?: string): Promise<EbookItem[]> => {
+    if (locale) {
+      // 假设 ebookItems 有 locale 字段，否则此处需按实际 schema 调整
+      return db.select().from(ebookItems).where(eq(ebookItems.locale, locale)).all();
+    }
     return db.select().from(ebookItems).all();
   },
 
@@ -53,7 +57,14 @@ export const categoriesService = {
     await db.insert(categories).values(newItem).run();
     return categoriesService.getById(newItem.id);
   },
-  getAll: async (): Promise<Category[]> => db.select().from(categories).all(),
+  // 支持 locale 过滤
+  getAll: async (locale?: string): Promise<Category[]> => {
+    if (locale) {
+      // 假设 categories 有 locale 字段，否则此处需按实际 schema 调整
+      return db.select().from(categories).where(eq(categories.locale, locale)).all();
+    }
+    return db.select().from(categories).all();
+  },
   getById: async (id: string): Promise<Category | null> => {
     const result = await db.select().from(categories).where(eq(categories.id, id)).all();
     return result.length > 0 ? result[0] : null;
@@ -72,6 +83,10 @@ export const productsService = {
     const result = await db.select().from(products).where(eq(products.id, id)).all();
     return result.length > 0 ? result[0] : null;
   },
+  getProductBySlug: async (slug: string): Promise<Product | null> => {
+    const result = await db.select().from(products).where(eq(products.slug, slug)).all();
+    return result.length > 0 ? result[0] : null;
+  }
 };
 
 // Testimonials service
@@ -158,7 +173,20 @@ export const gameItemsService = {
     await db.insert(gameItems).values(newItem).run();
     return gameItemsService.getById(newItem.id);
   },
-  getAll: async (): Promise<GameItem[]> => db.select().from(gameItems).all(),
+  // 获取所有游戏，支持 locale 和 tags 过滤
+  getAll: async (locale?: string, tags?: string[]): Promise<GameItem[]> => {
+    let query = db.select().from(gameItems);
+    if (locale) {
+      query = query.where(eq(gameItems.locale, locale));
+    }
+    if (tags && tags.length > 0) {
+      // 简单实现：只要 tags 字符串包含任一标签即可
+      for (const tag of tags) {
+        query = query.where(gameItems.tags.like(`%${tag}%`));
+      }
+    }
+    return query.all();
+  },
   getById: async (id: string): Promise<GameItem | null> => {
     const result = await db.select().from(gameItems).where(eq(gameItems.id, id)).all();
     return result.length > 0 ? result[0] : null;

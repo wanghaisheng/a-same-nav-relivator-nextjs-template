@@ -14,6 +14,7 @@ export const products = sqliteTable("products", {
   description: text("description"),
   features: text("features"),
   specs: text("specs"),
+  locale: text('locale').notNull(), // 新增locale字段，支持多语言
   createdAt: createTimestampWithDefault("createdAt"),
   updatedAt: createTimestampWithDefault("updatedAt"),
 });

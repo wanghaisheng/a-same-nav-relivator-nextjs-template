@@ -10,7 +10,7 @@ export default getRequestConfig(async ({requestLocale}) => {
 
   return {
     locale,
-    messages: (await import(`../messages/${locale}.json`)).default
+    messages: (await import(`../../messages/${locale}.json`)).default
   };
 });
 
@@ -18,6 +18,6 @@ export default getRequestConfig(async ({requestLocale}) => {
 export async function getMessages(locale: string) {
   return {
     locale,
-    messages: (await import(`../messages/${locale}.json`)).default
+    messages: (await import(`../../messages/${locale}.json`)).default
   };
 }

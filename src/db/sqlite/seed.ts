@@ -12,10 +12,12 @@ import { seedUsers } from "./seed/users";
 import { seedTestimonials } from "./seed/testimonials";
 import { seedAuth } from "./seed/auth";
 import { seedCategories } from "./seed/categories";
+import { seedGameItems } from "./seed/game_items";
 
 export async function clean() {
   console.log('Cleaning all tables...');
   // 按外键依赖顺序清空表（先子表后父表）
+  await db.run(sql`DELETE FROM game_items`);
   await db.run(sql`DELETE FROM ebook_items`);
   await db.run(sql`DELETE FROM products`);
   await db.run(sql`DELETE FROM users`);
@@ -31,6 +33,8 @@ export async function seed() {
     await seedCategories();
     console.log("Seeding ebooks...");
     await seedEbooks();
+    console.log("Seeding game items...");
+    await seedGameItems();
     console.log("Seeding products...");
     await seedProducts();
     console.log("Seeding users...");

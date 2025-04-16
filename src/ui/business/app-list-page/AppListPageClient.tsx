@@ -1,17 +1,18 @@
-'use client';
-import React, { useMemo, useState } from "react";
+"use client";
+import React, { useState, useMemo } from "react";
 import type { AppItem } from '@/db/sqlite/schema/app_items';
 import type { Category } from '@/db/sqlite/schema/categories';
+import { MultiSelect } from '@/ui/components/core/multi-selector';
+import { useTranslations } from 'next-intl';
 
-// 客户端组件，负责渲染与交互
 export interface AppListPageClientProps {
   apps: AppItem[];
   categories: Category[];
-  t: any; // next-intl translations instance
 }
 
-export function AppListPageClient({ apps, categories, t }: AppListPageClientProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
+export function AppListPageClient({ apps, categories }: AppListPageClientProps) {
+  const t = useTranslations('AppListPage');
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
 
   const categoryOptions = useMemo(() =>
     categories?.filter(Boolean).map(cat => ({
@@ -22,34 +23,37 @@ export function AppListPageClient({ apps, categories, t }: AppListPageClientProp
   );
 
   const filteredApps = useMemo(() => {
-    if (!selectedCategory) return apps;
-    return apps.filter(app => app.category === selectedCategory);
-  }, [apps, selectedCategory]);
+    if (!selectedCategories.length) return apps;
+    return apps.filter(app => selectedCategories.includes(app.category || ''));
+  }, [apps, selectedCategories]);
 
   if (!apps || apps.length === 0) {
     return <div>{t('empty')}</div>;
   }
 
   return (
-    <div>
+    <div className="app-list-page">
       <h2>{t('title')}</h2>
       {/* 分类筛选器 */}
       {categoryOptions.length > 0 && (
-        <select
-          value={selectedCategory}
-          onChange={e => setSelectedCategory(e.target.value)}
-        >
-          <option value="">{t('category.filterPlaceholder')}</option>
-          {categoryOptions.map(opt => (
-            <option key={opt.value} value={opt.value}>{opt.label}</option>
-          ))}
-        </select>
+        <div className="mb-4">
+          <MultiSelect
+            options={categoryOptions}
+            onValueChange={setSelectedCategories}
+            placeholder={t('category.filterPlaceholder')}
+          />
+        </div>
       )}
-      <ul>
+      {/* 主应用列表 */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {filteredApps.map(app => (
-          <li key={app.id}>{app.name + (app.category ? `（${app.category}）` : '')}</li>
+          <div key={app.id} className="border rounded p-4 bg-white shadow">
+            <div className="font-bold text-lg mb-2">{app.name}</div>
+            <div className="text-sm text-gray-500">{app.category || t('category.unknown')}</div>
+            {/* 可根据需要补充更多 app 信息 */}
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

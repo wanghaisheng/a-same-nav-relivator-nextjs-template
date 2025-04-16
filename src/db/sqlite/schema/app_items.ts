@@ -10,6 +10,7 @@ export const appItems = sqliteTable("app_items", {
   image: text("image"),
   category: text("category"),
   slug: text("slug"),
+  locale: text('locale').notNull(), // 新增locale字段，支持多语言
   // APP/TOOL特有字段
   platform: text("platform"),                // 平台兼容性 (如: "iOS, Android, Web")
   version: text("version"),                  // 版本信息

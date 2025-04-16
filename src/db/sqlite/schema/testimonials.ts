@@ -8,6 +8,7 @@ export const testimonials = sqliteTable("testimonials", {
   authorRole: text("author_role").notNull(),
   authorAvatar: text("author_avatar"),
   rating: integer("rating").notNull().default(5),
+  locale: text('locale').notNull(), // 新增locale字段，支持多语言
   createdAt: createTimestampWithDefault("created_at"),
   updatedAt: createTimestampWithDefault("updated_at"),
 });

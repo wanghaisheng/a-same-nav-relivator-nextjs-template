@@ -6,6 +6,7 @@ export const categories = sqliteTable('categories', {
   name: text('name').notNull(),
   image: text('image'),
   description: text('description'),
+  locale: text('locale').notNull(), // 新增locale字段，支持多语言
   createdAt: createTimestampWithDefault('created_at'),
   updatedAt: createTimestampWithDefault('updated_at'),
 });

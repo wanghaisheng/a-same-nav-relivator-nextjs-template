@@ -10,6 +10,7 @@ export const courseItems = sqliteTable("course_items", {
   image: text("image"),
   category: text("category"),
   slug: text("slug"),
+  locale: text('locale').notNull(), // 新增locale字段，支持多语言
   // COURSE特有字段
   duration: integer("duration"),            // 课程时长(分钟)
   level: text("level"),                     // 难度级别 (如: "初级, 中级, 高级")

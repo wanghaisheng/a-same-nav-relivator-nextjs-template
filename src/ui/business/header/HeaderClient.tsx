@@ -5,19 +5,15 @@ import { useTranslations } from "next-intl";
 import ThemeSwitch from "@/ui/components/website/theme-switch";
 import MobileHeader from "@/ui/components/website/moibile-header";
 import GitHubButton from "@/registry/components/github-repo-btn";
+import { headerNavConfig, HeaderNavItem as ConfigHeaderNavItem } from '@/ui/configs/headerNav.config';
 
-export interface HeaderNavItem {
-  label: string;
-  href: string;
-}
-
-export const HeaderClient: React.FC = () => {
+export const HeaderClient: React.FC<{ locale?: string }> = ({ locale }) => {
   const t = useTranslations("Header");
-  const navItems: HeaderNavItem[] = [
-    { label: t('ebooks', { defaultValue: '电子书' }), href: '/ebooks' },
-    { label: t('products', { defaultValue: '产品' }), href: '/products' },
-    // 可扩展更多导航项
-  ];
+  // 从配置文件读取导航项，支持国际化 label
+  const navItems: ConfigHeaderNavItem[] = headerNavConfig.map(item => ({
+    ...item,
+    label: item.i18nKey ? t(item.i18nKey, { defaultValue: item.label }) : item.label,
+  }));
   return (
     <header className="w-full fixed z-20 top-0 left-0 pt-1.5 xl:px-0 px-2 bg-primary-base border-b">
       <div className="lg:container p-1 h-full relative mx-auto flex justify-between rounded-lg items-center border bg-primary-base">

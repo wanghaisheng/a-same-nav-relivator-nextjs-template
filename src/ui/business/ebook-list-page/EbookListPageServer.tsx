@@ -15,7 +15,6 @@ export async function EbookListPageServer({ ebooks, categories, locale }: EbookL
     <EbookListPageClient
       ebooks={ebooks}
       categories={categories}
-      locale={locale}
     />
   );
 }
